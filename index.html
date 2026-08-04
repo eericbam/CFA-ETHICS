@@ -3,29 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Standard Streak — Ethics Drill</title>
+<title>The Standards — Flashcards</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
 
 :root{
-  --bg:#F4F1FF;
-  --card:#FFFFFF;
-  --card-2:#F1EEFF;
-  --ink:#2E2650;
-  --ink-soft:#6B6288;
-  --primary:#5B4FE8;
-  --primary-dark:#4238C4;
-  --primary-light:#8B82F5;
-  --gold:#FFC93C;
-  --gold-dark:#E0A700;
-  --good:#3FBF6F;
-  --good-bg:#E5F9ED;
-  --good-dark:#2E9A57;
-  --bad:#FF5A6E;
-  --bad-bg:#FFE9EC;
-  --bad-dark:#E23F52;
-  --line: rgba(46,38,80,0.10);
-  --radius: 20px;
+  --bg:#101B33;
+  --card:#F6F1E4;
+  --card-2:#EFE7D2;
+  --ink:#101B33;
+  --ink-soft:#5B5F6B;
+  --brass:#B8912F;
+  --brass-dark:#8A6D1F;
+  --brass-light:#D9B96A;
+  --good:#3F6B4A;
+  --good-bg:#E3ECE2;
+  --good-dark:#2A4E33;
+  --learn:#B8912F;
+  --learn-bg:#F3E7C8;
+  --learn-dark:#8A6D1F;
+  --line: rgba(16,27,51,0.12);
 }
 
 *{box-sizing:border-box;}
@@ -33,10 +30,10 @@ html,body{margin:0;padding:0;}
 body{
   min-height:100vh;
   background:
-    radial-gradient(circle at 10% 0%, rgba(255,201,60,0.25), transparent 40%),
-    radial-gradient(circle at 100% 100%, rgba(91,79,232,0.18), transparent 45%),
+    radial-gradient(circle at 15% -10%, rgba(184,145,47,0.18), transparent 45%),
+    radial-gradient(circle at 100% 110%, rgba(184,145,47,0.10), transparent 40%),
     var(--bg);
-  font-family:'Nunito', system-ui, sans-serif;
+  font-family:'Inter', system-ui, sans-serif;
   color:var(--ink);
   display:flex;
   align-items:center;
@@ -49,274 +46,161 @@ body{
   max-width:440px;
   min-height:660px;
   background:var(--card);
-  border-radius:28px;
-  box-shadow:0 24px 50px -18px rgba(46,38,80,0.35), 0 0 0 1px rgba(91,79,232,0.08);
+  border-radius:24px;
+  box-shadow:0 24px 50px -18px rgba(0,0,0,0.5), 0 0 0 1px rgba(184,145,47,0.25);
   overflow:hidden;
   position:relative;
   display:flex;
   flex-direction:column;
 }
 
-/* ---------- Top bar ---------- */
 .topbar{
   padding:16px 18px 14px;
-  background:linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color:#fff;
-  position:relative;
+  background:var(--bg);
+  color:var(--card);
 }
 .eyebrow{
-  font-family:'Baloo 2', sans-serif;
-  font-size:14px;
-  font-weight:700;
-  letter-spacing:.01em;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12.5px;
+  font-weight:600;
+  letter-spacing:.04em;
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:10px;
 }
-.stat-row{ display:flex; align-items:center; gap:12px; }
 .stat{
   display:flex; align-items:center; gap:4px;
-  font-family:'Baloo 2', sans-serif;
-  font-size:14px; font-weight:700;
-  background:rgba(255,255,255,0.16);
-  padding:4px 9px 4px 7px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12.5px; font-weight:600;
+  background:rgba(246,241,228,0.14);
+  padding:4px 9px;
   border-radius:100px;
 }
-.seal-row{display:flex; gap:4px;}
-.seal{
-  width:16px;height:16px;
-  transition:transform .25s ease, opacity .25s ease;
-  filter:none;
-}
-.seal.lost{ opacity:.25; filter:grayscale(1); transform:scale(0.85); }
+.progress-track{ height:9px; border-radius:8px; background:rgba(246,241,228,0.14); overflow:hidden; }
+.progress-fill{ height:100%; border-radius:8px; background:linear-gradient(90deg, var(--brass), var(--brass-light)); width:0%; transition:width .35s ease; }
 
-.progress-track{
-  height:10px;
-  border-radius:8px;
-  background:rgba(255,255,255,0.22);
-  overflow:hidden;
-}
-.progress-fill{
-  height:100%;
-  border-radius:8px;
-  background:linear-gradient(90deg, var(--gold), #FFE08A);
-  width:0%;
-  transition:width .4s cubic-bezier(.4,0,.2,1);
-  box-shadow:0 0 8px rgba(255,201,60,0.6);
-}
-
-/* ---------- Main ---------- */
-.stage{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  padding:22px 20px 20px;
-  position:relative;
-}
-
-/* ----- Mascot ----- */
-.mascot{ width:96px; height:96px; margin:0 auto; display:block; filter:drop-shadow(0 8px 14px rgba(46,38,80,0.18)); }
-.mascot.bounce{ animation: bounce .6s ease; }
-.mascot.wobble{ animation: wobble .5s ease; }
-@keyframes bounce{ 0%{transform:translateY(0) scale(1);} 30%{transform:translateY(-14px) scale(1.05);} 55%{transform:translateY(0) scale(0.97);} 75%{transform:translateY(-5px) scale(1.02);} 100%{transform:translateY(0) scale(1);} }
-@keyframes wobble{ 0%,100%{transform:rotate(0);} 20%{transform:rotate(-8deg);} 40%{transform:rotate(7deg);} 60%{transform:rotate(-5deg);} 80%{transform:rotate(3deg);} }
-
-.bubble{
-  background:var(--card-2);
-  border-radius:16px;
-  padding:9px 14px;
-  font-family:'Baloo 2', sans-serif;
-  font-weight:600;
-  font-size:14px;
-  color:var(--primary-dark);
-  text-align:center;
-  margin:10px auto 0;
-  max-width:280px;
-  position:relative;
-}
-
-/* ----- Start screen ----- */
-.start-screen{ text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1; gap:4px;}
-h1.title{
-  font-family:'Baloo 2', sans-serif;
-  font-weight:800;
-  font-size:30px;
-  margin:14px 0 4px;
-  letter-spacing:-.01em;
-  color:var(--ink);
-}
-.subtitle{
-  color:var(--ink-soft);
-  font-size:15px;
-  font-weight:600;
-  line-height:1.5;
-  max-width:300px;
-  margin:0 0 22px;
-}
-.meta-pills{
-  display:flex; gap:10px; margin-bottom:26px; flex-wrap:wrap; justify-content:center;
-}
-.pill{
-  font-family:'Baloo 2', sans-serif;
-  font-weight:700;
-  font-size:13px;
-  background:var(--card-2);
-  border:2px solid var(--line);
-  padding:7px 13px;
-  border-radius:100px;
-  color:var(--primary-dark);
-}
-.pill b{ color:var(--gold-dark); }
-
-.btn{
-  border:none;
-  cursor:pointer;
-  font-family:'Baloo 2', sans-serif;
-  font-weight:700;
-  font-size:17px;
-  letter-spacing:.01em;
-  border-radius:16px;
-  padding:15px 20px;
-  width:100%;
-  transition:transform .1s ease, box-shadow .1s ease, filter .15s ease;
-}
-.btn:active{ transform:translateY(3px); }
-.btn-primary{
-  background:var(--good);
-  color:#fff;
-  box-shadow:0 5px 0 0 var(--good-dark);
-}
-.btn-primary:active{ box-shadow:0 2px 0 0 var(--good-dark); }
-.btn-primary:hover{ filter:brightness(1.04); }
-.btn-ghost{
-  background:transparent;
-  color:var(--ink-soft);
-  border:2px solid var(--line);
-  margin-top:10px;
-  box-shadow:none;
-}
-
-/* ----- Question screen ----- */
-.q-wrap{ display:flex; flex-direction:column; flex:1; }
-.tag{
-  font-family:'Baloo 2', sans-serif;
-  font-size:12px;
-  font-weight:700;
-  color:var(--primary-dark);
-  background:var(--card-2);
-  display:inline-block;
-  padding:5px 11px;
-  border-radius:100px;
-  margin-bottom:14px;
-  width:fit-content;
-}
-.question{
-  font-family:'Baloo 2', sans-serif;
-  font-size:20px;
-  line-height:1.35;
-  font-weight:600;
-  margin:0 0 20px;
-  white-space:pre-line;
-  color:var(--ink);
-}
-.options{ display:flex; flex-direction:column; gap:10px; margin-bottom:6px;}
-.option{
-  text-align:left;
-  background:#fff;
-  border:2.5px solid var(--line);
-  border-radius:16px;
-  padding:13px 14px;
-  font-size:14.5px;
-  font-weight:700;
-  line-height:1.4;
-  color:var(--ink);
-  cursor:pointer;
-  display:flex;
-  gap:11px;
-  align-items:flex-start;
-  transition:border-color .15s, background .15s, transform .1s;
-  font-family:'Nunito', sans-serif;
-  box-shadow:0 3px 0 0 var(--line);
-}
-.option:hover{ border-color:var(--primary-light); }
-.option:active{ transform:translateY(2px); box-shadow:0 1px 0 0 var(--line); }
-.option .letter{
-  font-family:'Baloo 2', sans-serif;
-  font-weight:700;
-  font-size:12.5px;
-  width:24px;height:24px;
-  border-radius:50%;
-  background:var(--card-2);
-  color:var(--primary-dark);
-  display:flex; align-items:center; justify-content:center;
-  flex-shrink:0;
-  margin-top:1px;
-}
-.option.correct{ background:var(--good-bg); border-color:var(--good); box-shadow:0 3px 0 0 var(--good-dark); }
-.option.correct .letter{ background:var(--good); color:#fff; }
-.option.incorrect{ background:var(--bad-bg); border-color:var(--bad); box-shadow:0 3px 0 0 var(--bad-dark); }
-.option.incorrect .letter{ background:var(--bad); color:#fff; }
-.option.disabled{ pointer-events:none; opacity:.55; }
-.option.disabled.correct, .option.disabled.incorrect{ opacity:1; }
-
-.spacer{ flex:1; }
-
-/* Feedback panel */
-.feedback{
-  border-radius:18px;
-  padding:14px 16px 14px;
-  margin-top:14px;
-  display:none;
-  position:relative;
-  overflow:visible;
-  animation:slideUp .28s ease;
-}
-@keyframes slideUp{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
-.feedback.show{ display:flex; gap:12px; align-items:flex-start; }
-.feedback.ok{ background:var(--good-bg); border:2.5px solid var(--good); }
-.feedback.no{ background:var(--bad-bg); border:2.5px solid var(--bad); }
-.fb-mascot{ width:46px; height:46px; flex-shrink:0; margin-top:2px; }
-.fb-body{ flex:1; }
-.fb-head{
-  font-family:'Baloo 2', sans-serif;
-  font-weight:800;
-  font-size:15px;
-  margin-bottom:4px;
-}
-.feedback.ok .fb-head{ color:var(--good-dark); }
-.feedback.no .fb-head{ color:var(--bad-dark); }
-.fb-text{ font-size:13.5px; font-weight:600; line-height:1.5; color:var(--ink-soft); }
-.fb-xp{ font-family:'Baloo 2', sans-serif; font-size:12px; color:var(--gold-dark); margin-top:8px; font-weight:700;}
-
-.bottom-bar{ margin-top:16px; }
-
-/* ----- Result screen ----- */
-.result-screen{ display:flex; flex-direction:column; align-items:center; text-align:center; flex:1; justify-content:center; }
-.result-title{ font-family:'Baloo 2', sans-serif; font-size:26px; font-weight:800; margin:10px 0 4px; color:var(--ink); }
-.result-sub{ color:var(--ink-soft); font-size:14.5px; font-weight:600; margin-bottom:22px; }
-.score-grid{ display:flex; gap:10px; margin-bottom:26px; width:100%; }
-.score-card{
-  flex:1; background:var(--card-2); border-radius:16px; padding:14px 8px;
-}
-.score-num{ font-family:'Baloo 2', sans-serif; font-size:24px; font-weight:800; color:var(--primary-dark);}
-.score-label{ font-family:'Baloo 2', sans-serif; font-size:10.5px; font-weight:700; text-transform:uppercase; color:var(--ink-soft); margin-top:2px;}
-
+.stage{ flex:1; display:flex; flex-direction:column; padding:22px 20px 20px; position:relative; }
 .hidden{ display:none !important; }
 
-/* Confetti */
-.confetti-piece{
-  position:fixed;
-  top:-10px;
-  width:8px;height:14px;
-  z-index:999;
-  border-radius:2px;
-  pointer-events:none;
-  animation: confettiFall linear forwards;
+/* ---------- Mascot ---------- */
+.mascot{ width:92px; height:92px; margin:0 auto; display:block; filter:drop-shadow(0 8px 14px rgba(16,27,51,0.25)); }
+.mascot.bounce{ animation: bounce .6s ease; }
+@keyframes bounce{ 0%{transform:translateY(0) scale(1);} 30%{transform:translateY(-12px) scale(1.05);} 60%{transform:translateY(0) scale(0.97);} 100%{transform:translateY(0) scale(1);} }
+.bubble{
+  background:var(--card-2); border-radius:14px; padding:9px 14px;
+  font-family:'Fraunces', serif; font-weight:600; font-size:14px;
+  color:var(--brass-dark); text-align:center; margin:10px auto 0; max-width:290px;
 }
-@keyframes confettiFall{
-  to{ transform: translateY(720px) rotate(540deg); opacity:0; }
+
+/* ---------- Home screen ---------- */
+.home-screen{ text-align:center; display:flex; flex-direction:column; align-items:center; flex:1; gap:4px; padding-top:4px; }
+h1.title{ font-family:'Fraunces', serif; font-weight:700; font-size:27px; margin:12px 0 4px; color:var(--ink); }
+.subtitle{ color:var(--ink-soft); font-size:14.5px; font-weight:500; line-height:1.5; max-width:300px; margin:0 0 18px; }
+
+.btn{
+  border:none; cursor:pointer; font-family:'Inter', sans-serif; font-weight:700; font-size:15.5px;
+  border-radius:14px; padding:14px 20px; width:100%; transition:transform .1s ease, box-shadow .1s ease;
 }
+.btn:active{ transform:translateY(3px); }
+.btn-primary{ background:var(--ink); color:var(--card); box-shadow:0 5px 0 0 #050c1c; }
+.btn-primary:active{ box-shadow:0 2px 0 0 #050c1c; }
+.btn-primary:disabled{ opacity:.4; pointer-events:none; }
+.btn-ghost{ background:transparent; color:var(--ink-soft); border:2px solid var(--line); box-shadow:none; margin-top:10px; }
+.btn-good{ background:var(--good); color:#fff; box-shadow:0 5px 0 0 var(--good-dark); }
+.btn-good:active{ box-shadow:0 2px 0 0 var(--good-dark); }
+.btn-learn{ background:var(--learn); color:#fff; box-shadow:0 5px 0 0 var(--learn-dark); }
+.btn-learn:active{ box-shadow:0 2px 0 0 var(--learn-dark); }
+
+/* ---------- Section select ---------- */
+.section-screen{ display:flex; flex-direction:column; flex:1; }
+.section-header{ text-align:center; margin-bottom:14px; }
+.section-header h2{ font-family:'Fraunces', serif; font-size:19px; font-weight:700; margin:0 0 2px; }
+.section-header p{ color:var(--ink-soft); font-size:13px; font-weight:500; margin:0; }
+
+.section-list{ display:flex; flex-direction:column; gap:9px; overflow-y:auto; flex:1; margin-bottom:12px; padding-right:2px; }
+.section-chip{
+  display:flex; align-items:center; gap:12px;
+  border:2px solid var(--line); border-radius:14px; padding:12px 14px;
+  cursor:pointer; transition:border-color .15s, background .15s;
+  background:#fff;
+}
+.section-chip.selected{ border-color:var(--brass); background:var(--card-2); }
+.section-roman{
+  font-family:'Fraunces', serif; font-weight:700; font-size:17px; color:var(--brass-dark);
+  width:34px; text-align:center; flex-shrink:0;
+}
+.section-info{ flex:1; }
+.section-name{ font-family:'Inter', sans-serif; font-weight:700; font-size:13.5px; color:var(--ink); line-height:1.3; }
+.section-count{ font-size:11.5px; color:var(--ink-soft); font-weight:600; margin-top:2px; }
+.section-check{
+  width:22px; height:22px; border-radius:7px; border:2px solid var(--line);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  font-size:13px; color:#fff; font-weight:800;
+}
+.section-chip.selected .section-check{ background:var(--brass); border-color:var(--brass); }
+
+.quick-actions{ display:flex; gap:8px; margin-bottom:12px; }
+.link-btn{
+  background:none; border:none; font-family:'Inter', sans-serif; font-weight:700; font-size:12px;
+  color:var(--brass-dark); cursor:pointer; padding:4px 2px;
+}
+.shuffle-row{
+  display:flex; align-items:center; justify-content:space-between;
+  font-family:'Inter', sans-serif; font-weight:700; font-size:13px; color:var(--ink);
+  background:var(--card-2); padding:10px 14px; border-radius:12px; margin-bottom:12px;
+}
+.switch{ position:relative; width:42px; height:24px; }
+.switch input{ opacity:0; width:0; height:0; }
+.switch-track{ position:absolute; inset:0; background:var(--line); border-radius:100px; cursor:pointer; transition:background .2s; }
+.switch-track:before{ content:""; position:absolute; width:18px; height:18px; left:3px; top:3px; background:#fff; border-radius:50%; transition:transform .2s; box-shadow:0 1px 3px rgba(0,0,0,0.25); }
+.switch input:checked + .switch-track{ background:var(--brass); }
+.switch input:checked + .switch-track:before{ transform:translateX(18px); }
+
+/* ---------- Card screen ---------- */
+.card-screen{ display:flex; flex-direction:column; flex:1; }
+.card-scene{ flex:1; perspective:1400px; margin-bottom:16px; min-height:280px; }
+.card-inner{
+  position:relative; width:100%; height:100%; min-height:280px;
+  transition:transform .5s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d; cursor:pointer;
+}
+.card-inner.flipped{ transform:rotateY(180deg); }
+.card-face{
+  position:absolute; inset:0; backface-visibility:hidden;
+  border-radius:18px; padding:24px 22px; display:flex; flex-direction:column;
+  box-shadow:0 6px 0 0 var(--line), 0 10px 24px -10px rgba(16,27,51,0.25);
+  border:2px solid var(--line);
+}
+.card-front{ background:#fff; align-items:center; justify-content:center; text-align:center; }
+.card-back{ background:var(--card-2); transform:rotateY(180deg); }
+.card-tag{
+  font-family:'IBM Plex Mono', monospace; font-size:10.5px; font-weight:700; color:var(--brass-dark);
+  background:var(--card-2); display:inline-block; padding:4px 10px; border-radius:100px; margin-bottom:16px;
+  position:absolute; top:18px; left:18px; letter-spacing:.03em;
+}
+.card-front .card-tag{ background:var(--card-2); }
+.card-front-text{
+  font-family:'Fraunces', serif; font-weight:700; font-size:22px; line-height:1.35; color:var(--ink);
+  white-space:pre-line;
+}
+.tap-hint{ font-family:'Inter', sans-serif; font-size:12px; color:var(--ink-soft); margin-top:16px; font-weight:600; }
+.card-back-text{
+  font-family:'Fraunces', serif; font-size:19px; font-weight:700; line-height:1.5; color:var(--ink);
+  white-space:pre-line; margin-top:36px; flex:1; display:flex; align-items:center;
+}
+
+.rate-row{ display:flex; gap:10px; }
+.rate-row .btn{ flex:1; }
+.rate-hint{ text-align:center; font-family:'Inter', sans-serif; font-size:12px; color:var(--ink-soft); font-weight:700; margin-bottom:10px; }
+
+/* ---------- Result screen ---------- */
+.result-screen{ display:flex; flex-direction:column; align-items:center; text-align:center; flex:1; justify-content:center; }
+.result-title{ font-family:'Fraunces', serif; font-size:23px; font-weight:700; margin:10px 0 4px; }
+.result-sub{ color:var(--ink-soft); font-size:13.5px; font-weight:500; margin-bottom:20px; }
+.score-grid{ display:flex; gap:10px; margin-bottom:22px; width:100%; }
+.score-card{ flex:1; background:var(--card-2); border-radius:14px; padding:14px 8px; }
+.score-num{ font-family:'Fraunces', serif; font-size:21px; font-weight:700; color:var(--brass-dark); }
+.score-label{ font-family:'IBM Plex Mono', monospace; font-size:9.5px; font-weight:600; text-transform:uppercase; color:var(--ink-soft); margin-top:2px; }
 </style>
 </head>
 <body>
@@ -325,76 +209,160 @@ h1.title{
 
   <div class="topbar">
     <div class="eyebrow">
-      <span id="screenLabel">Standard Streak</span>
-      <div class="stat-row">
-        <div class="stat">🔥 <span id="streakVal">0</span></div>
-        <div class="stat">🪙 <span id="xpVal">0</span></div>
-      </div>
+      <span id="screenLabel">The Standards</span>
+      <div class="stat" id="masteredStat">✅ <span id="masteredVal">0</span> mastered</div>
     </div>
-    <div id="progressArea">
-      <div class="stat-row" style="justify-content:space-between; margin-bottom:6px;">
-        <div class="seal-row" id="heartsRow"></div>
-        <div class="stat" id="qCounter" style="background:rgba(255,255,255,0.16); color:#fff;"></div>
-      </div>
+    <div id="progressArea" class="hidden">
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     </div>
   </div>
 
   <div class="stage">
 
-    <!-- START SCREEN -->
-    <div class="start-screen" id="startScreen">
-      <svg class="mascot" id="startMascot" viewBox="0 0 120 120"></svg>
-      <div class="bubble" id="startBubble">Ready to out-ethics everyone in your cohort?</div>
-      <h1 class="title">Standard Streak</h1>
-      <p class="subtitle">Quick-fire reps on the CFA Code of Ethics, Standards I–VII, and GIPS. Five hearts. Bite-sized. Weirdly fun.</p>
-      <div class="meta-pills">
-        <div class="pill"><b id="totalQCount">0</b> questions</div>
-        <div class="pill">Best streak: <b id="bestStreakPill">0</b> 🔥</div>
-      </div>
-      <button class="btn btn-primary" onclick="startSession()">Let's go</button>
+    <!-- HOME SCREEN -->
+    <div class="home-screen" id="homeScreen">
+      <svg class="mascot" id="homeMascot" viewBox="0 0 120 120"></svg>
+      <div class="bubble" id="homeBubble">Standards I–VII. Let's make them stick.</div>
+      <h1 class="title">Learn the Standards</h1>
+      <p class="subtitle">Flashcards for memorizing Standards I–VII and every A/B/C sub-standard — both directions, code → name and name → code.</p>
+      <div style="flex:1"></div>
+      <button class="btn btn-primary" onclick="showSectionSelect()">Choose Standards to review</button>
     </div>
 
-    <!-- QUESTION SCREEN -->
-    <div class="q-wrap hidden" id="quizScreen">
-      <div class="tag" id="qTag">STANDARD I(A)</div>
-      <div class="question" id="qText">Question text</div>
-      <div class="options" id="qOptions"></div>
-      <div class="feedback" id="feedback">
-        <svg class="fb-mascot" id="fbMascot" viewBox="0 0 120 120"></svg>
-        <div class="fb-body">
-          <div class="fb-head" id="fbHead">Nailed it!</div>
-          <div class="fb-text" id="fbText"></div>
-          <div class="fb-xp" id="fbXp"></div>
+    <!-- SECTION SELECT SCREEN -->
+    <div class="section-screen hidden" id="sectionScreen">
+      <div class="section-header">
+        <h2>Which Standards?</h2>
+        <p>Tap to select one or more</p>
+      </div>
+      <div class="quick-actions">
+        <button class="link-btn" onclick="selectAllSections()">Select all</button>
+        <button class="link-btn" onclick="clearAllSections()">Clear</button>
+      </div>
+      <div class="section-list" id="sectionList"></div>
+      <div class="shuffle-row">
+        <span>🔀 Shuffle cards</span>
+        <label class="switch">
+          <input type="checkbox" id="shuffleToggle" checked>
+          <span class="switch-track"></span>
+        </label>
+      </div>
+      <button class="btn btn-primary" id="startReviewBtn" onclick="startReview()" disabled>Start review</button>
+      <button class="btn btn-ghost" onclick="showHome()">Back</button>
+    </div>
+
+    <!-- CARD SCREEN -->
+    <div class="card-screen hidden" id="cardScreen">
+      <div class="card-scene">
+        <div class="card-inner" id="cardInner" onclick="flipCard()">
+          <div class="card-face card-front">
+            <div class="card-tag" id="cardTagFront">STANDARD</div>
+            <div class="card-front-text" id="cardFrontText">Prompt</div>
+            <div class="tap-hint">👆 Tap to reveal the answer</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="card-tag" id="cardTagBack">STANDARD</div>
+            <div class="card-back-text" id="cardBackText">Answer</div>
+          </div>
         </div>
       </div>
-      <div class="spacer"></div>
-      <div class="bottom-bar">
-        <button class="btn btn-primary hidden" id="continueBtn" onclick="nextQuestion()">Continue</button>
+      <div class="rate-hint" id="rateHint">Flip the card first</div>
+      <div class="rate-row">
+        <button class="btn btn-learn" id="learnBtn" onclick="rateCard(false)" disabled>🤔 Still learning</button>
+        <button class="btn btn-good" id="gotItBtn" onclick="rateCard(true)" disabled>💪 Got it!</button>
       </div>
     </div>
 
     <!-- RESULT SCREEN -->
     <div class="result-screen hidden" id="resultScreen">
       <svg class="mascot" id="resultMascot" viewBox="0 0 120 120"></svg>
-      <h2 class="result-title" id="resultTitle">Session Complete</h2>
-      <p class="result-sub" id="resultSub">Nicely done.</p>
+      <h2 class="result-title" id="resultTitle">Deck Complete!</h2>
+      <p class="result-sub" id="resultSub">Nice work.</p>
       <div class="score-grid">
-        <div class="score-card"><div class="score-num" id="resAccuracy">0%</div><div class="score-label">Accuracy</div></div>
-        <div class="score-card"><div class="score-num" id="resXp">+0</div><div class="score-label">Coins</div></div>
-        <div class="score-card"><div class="score-num" id="resStreak">0</div><div class="score-label">Day Streak</div></div>
+        <div class="score-card"><div class="score-num" id="resGotIt">0</div><div class="score-label">Got It</div></div>
+        <div class="score-card"><div class="score-num" id="resLearning">0</div><div class="score-label">Still Learning</div></div>
+        <div class="score-card"><div class="score-num" id="resTotal">0</div><div class="score-label">Reviewed</div></div>
       </div>
-      <button class="btn btn-primary" onclick="startSession()">Drill again</button>
-      <button class="btn btn-ghost" onclick="showStart()">Back to start</button>
+      <button class="btn btn-primary" id="reviewMissedBtn" onclick="reviewMissed()">Review the ones I missed</button>
+      <button class="btn btn-ghost" onclick="showSectionSelect()">Choose different Standards</button>
     </div>
 
   </div>
 </div>
 
 <script>
+const SECTIONS = [
+  { key: "std1", label: "Standard I: Professionalism", roman: "I" },
+  { key: "std2", label: "Standard II: Integrity of Capital Markets", roman: "II" },
+  { key: "std3", label: "Standard III: Duties to Clients", roman: "III" },
+  { key: "std4", label: "Standard IV: Duties to Employers", roman: "IV" },
+  { key: "std5", label: "Standard V: Investment Analysis, Recommendations, and Actions", roman: "V" },
+  { key: "std6", label: "Standard VI: Conflicts of Interest", roman: "VI" },
+  { key: "std7", label: "Standard VII: Responsibilities as a CFA Institute Member/Candidate", roman: "VII" },
+];
+
+const CARDS = [
+  { id:1, section:"std1", front:"Standard I", back:"Professionalism" },
+  { id:2, section:"std1", front:"Which Standard covers:\n\n\"Professionalism\"?", back:"Standard I" },
+  { id:3, section:"std1", front:"I(A)", back:"Knowledge of the Law\n\n(part of Standard I: Professionalism)" },
+  { id:4, section:"std1", front:"Which sub-standard covers:\n\n\"Knowledge of the Law\"?", back:"I(A)\n\n(under Standard I: Professionalism)" },
+  { id:5, section:"std1", front:"I(B)", back:"Independence & Objectivity\n\n(part of Standard I: Professionalism)" },
+  { id:6, section:"std1", front:"Which sub-standard covers:\n\n\"Independence & Objectivity\"?", back:"I(B)\n\n(under Standard I: Professionalism)" },
+  { id:7, section:"std1", front:"I(C)", back:"Misrepresentation\n\n(part of Standard I: Professionalism)" },
+  { id:8, section:"std1", front:"Which sub-standard covers:\n\n\"Misrepresentation\"?", back:"I(C)\n\n(under Standard I: Professionalism)" },
+  { id:9, section:"std1", front:"I(D)", back:"Misconduct\n\n(part of Standard I: Professionalism)" },
+  { id:10, section:"std1", front:"Which sub-standard covers:\n\n\"Misconduct\"?", back:"I(D)\n\n(under Standard I: Professionalism)" },
+  { id:11, section:"std2", front:"Standard II", back:"Integrity of Capital Markets" },
+  { id:12, section:"std2", front:"Which Standard covers:\n\n\"Integrity of Capital Markets\"?", back:"Standard II" },
+  { id:13, section:"std2", front:"II(A)", back:"Material Nonpublic Information\n\n(part of Standard II: Integrity of Capital Markets)" },
+  { id:14, section:"std2", front:"Which sub-standard covers:\n\n\"Material Nonpublic Information\"?", back:"II(A)\n\n(under Standard II: Integrity of Capital Markets)" },
+  { id:15, section:"std2", front:"II(B)", back:"Market Manipulation\n\n(part of Standard II: Integrity of Capital Markets)" },
+  { id:16, section:"std2", front:"Which sub-standard covers:\n\n\"Market Manipulation\"?", back:"II(B)\n\n(under Standard II: Integrity of Capital Markets)" },
+  { id:17, section:"std3", front:"Standard III", back:"Duties to Clients" },
+  { id:18, section:"std3", front:"Which Standard covers:\n\n\"Duties to Clients\"?", back:"Standard III" },
+  { id:19, section:"std3", front:"III(A)", back:"Loyalty, Prudence and Care\n\n(part of Standard III: Duties to Clients)" },
+  { id:20, section:"std3", front:"Which sub-standard covers:\n\n\"Loyalty, Prudence and Care\"?", back:"III(A)\n\n(under Standard III: Duties to Clients)" },
+  { id:21, section:"std3", front:"III(B)", back:"Fair Dealing\n\n(part of Standard III: Duties to Clients)" },
+  { id:22, section:"std3", front:"Which sub-standard covers:\n\n\"Fair Dealing\"?", back:"III(B)\n\n(under Standard III: Duties to Clients)" },
+  { id:23, section:"std3", front:"III(C)", back:"Suitability\n\n(part of Standard III: Duties to Clients)" },
+  { id:24, section:"std3", front:"Which sub-standard covers:\n\n\"Suitability\"?", back:"III(C)\n\n(under Standard III: Duties to Clients)" },
+  { id:25, section:"std3", front:"III(D)", back:"Performance Presentation\n\n(part of Standard III: Duties to Clients)" },
+  { id:26, section:"std3", front:"Which sub-standard covers:\n\n\"Performance Presentation\"?", back:"III(D)\n\n(under Standard III: Duties to Clients)" },
+  { id:27, section:"std3", front:"III(E)", back:"Preservation of Confidentiality\n\n(part of Standard III: Duties to Clients)" },
+  { id:28, section:"std3", front:"Which sub-standard covers:\n\n\"Preservation of Confidentiality\"?", back:"III(E)\n\n(under Standard III: Duties to Clients)" },
+  { id:29, section:"std4", front:"Standard IV", back:"Duties to Employers" },
+  { id:30, section:"std4", front:"Which Standard covers:\n\n\"Duties to Employers\"?", back:"Standard IV" },
+  { id:31, section:"std4", front:"IV(A)", back:"Loyalty\n\n(part of Standard IV: Duties to Employers)" },
+  { id:32, section:"std4", front:"Which sub-standard covers:\n\n\"Loyalty\"?", back:"IV(A)\n\n(under Standard IV: Duties to Employers)" },
+  { id:33, section:"std4", front:"IV(B)", back:"Additional Compensation Arrangements\n\n(part of Standard IV: Duties to Employers)" },
+  { id:34, section:"std4", front:"Which sub-standard covers:\n\n\"Additional Compensation Arrangements\"?", back:"IV(B)\n\n(under Standard IV: Duties to Employers)" },
+  { id:35, section:"std4", front:"IV(C)", back:"Responsibilities of Supervisors\n\n(part of Standard IV: Duties to Employers)" },
+  { id:36, section:"std4", front:"Which sub-standard covers:\n\n\"Responsibilities of Supervisors\"?", back:"IV(C)\n\n(under Standard IV: Duties to Employers)" },
+  { id:37, section:"std5", front:"Standard V", back:"Investment Analysis, Recommendations, and Actions" },
+  { id:38, section:"std5", front:"Which Standard covers:\n\n\"Investment Analysis, Recommendations, and Actions\"?", back:"Standard V" },
+  { id:39, section:"std5", front:"V(A)", back:"Diligence & Reasonable Basis\n\n(part of Standard V: Investment Analysis, Recommendations, and Actions)" },
+  { id:40, section:"std5", front:"Which sub-standard covers:\n\n\"Diligence & Reasonable Basis\"?", back:"V(A)\n\n(under Standard V: Investment Analysis, Recommendations, and Actions)" },
+  { id:41, section:"std5", front:"V(B)", back:"Communication with Clients and Prospective Clients\n\n(part of Standard V: Investment Analysis, Recommendations, and Actions)" },
+  { id:42, section:"std5", front:"Which sub-standard covers:\n\n\"Communication with Clients and Prospective Clients\"?", back:"V(B)\n\n(under Standard V: Investment Analysis, Recommendations, and Actions)" },
+  { id:43, section:"std5", front:"V(C)", back:"Record Retention\n\n(part of Standard V: Investment Analysis, Recommendations, and Actions)" },
+  { id:44, section:"std5", front:"Which sub-standard covers:\n\n\"Record Retention\"?", back:"V(C)\n\n(under Standard V: Investment Analysis, Recommendations, and Actions)" },
+  { id:45, section:"std6", front:"Standard VI", back:"Conflicts of Interest" },
+  { id:46, section:"std6", front:"Which Standard covers:\n\n\"Conflicts of Interest\"?", back:"Standard VI" },
+  { id:47, section:"std6", front:"VI(A)", back:"Disclosure of Conflicts\n\n(part of Standard VI: Conflicts of Interest)" },
+  { id:48, section:"std6", front:"Which sub-standard covers:\n\n\"Disclosure of Conflicts\"?", back:"VI(A)\n\n(under Standard VI: Conflicts of Interest)" },
+  { id:49, section:"std6", front:"VI(B)", back:"Priority of Transactions\n\n(part of Standard VI: Conflicts of Interest)" },
+  { id:50, section:"std6", front:"Which sub-standard covers:\n\n\"Priority of Transactions\"?", back:"VI(B)\n\n(under Standard VI: Conflicts of Interest)" },
+  { id:51, section:"std6", front:"VI(C)", back:"Referral Fees\n\n(part of Standard VI: Conflicts of Interest)" },
+  { id:52, section:"std6", front:"Which sub-standard covers:\n\n\"Referral Fees\"?", back:"VI(C)\n\n(under Standard VI: Conflicts of Interest)" },
+  { id:53, section:"std7", front:"Standard VII", back:"Responsibilities as a CFA Institute Member/Candidate" },
+  { id:54, section:"std7", front:"Which Standard covers:\n\n\"Responsibilities as a CFA Institute Member/Candidate\"?", back:"Standard VII" },
+  { id:55, section:"std7", front:"VII(A)", back:"Conduct as Participants in CFA Programs\n\n(part of Standard VII: Responsibilities as a CFA Institute Member/Candidate)" },
+  { id:56, section:"std7", front:"Which sub-standard covers:\n\n\"Conduct as Participants in CFA Programs\"?", back:"VII(A)\n\n(under Standard VII: Responsibilities as a CFA Institute Member/Candidate)" },
+  { id:57, section:"std7", front:"VII(B)", back:"Reference to CFA Institute, the CFA Designation, and the CFA Program\n\n(part of Standard VII: Responsibilities as a CFA Institute Member/Candidate)" },
+  { id:58, section:"std7", front:"Which sub-standard covers:\n\n\"Reference to CFA Institute, the CFA Designation, and the CFA Program\"?", back:"VII(B)\n\n(under Standard VII: Responsibilities as a CFA Institute Member/Candidate)" },
+];
 /* ---------------- Mascot (Penny the Coin) ---------------- */
 function mascotSVG(mood){
-  // base coin
   const base = `
     <defs>
       <radialGradient id="coinGrad" cx="35%" cy="30%" r="75%">
@@ -417,14 +385,11 @@ function mascotSVG(mood){
       <circle cx="30" cy="72" r="6" fill="#FF9F9F" opacity="0.6"/>
       <circle cx="90" cy="72" r="6" fill="#FF9F9F" opacity="0.6"/>
     `;
-  } else if(mood === 'sad'){
+  } else if(mood === 'think'){
     face = `
-      <path d="M35 55 Q42 50 49 55" stroke="#4A3300" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <path d="M71 55 Q78 50 85 55" stroke="#4A3300" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <circle cx="42" cy="63" r="5.5" fill="#4A3300"/>
-      <circle cx="78" cy="63" r="5.5" fill="#4A3300"/>
-      <path d="M42 88 Q60 74 78 88" stroke="#4A3300" stroke-width="5" fill="none" stroke-linecap="round"/>
-      <path d="M84 66 Q88 76 83 82" stroke="#8FD3F4" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.85"/>
+      <circle cx="42" cy="60" r="6" fill="#4A3300"/>
+      <path d="M70 55 Q78 51 86 55" stroke="#4A3300" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <path d="M46 80 Q60 76 74 80" stroke="#4A3300" stroke-width="5" fill="none" stroke-linecap="round"/>
     `;
   } else if(mood === 'wink'){
     face = `
@@ -436,7 +401,6 @@ function mascotSVG(mood){
       <circle cx="90" cy="72" r="6" fill="#FF9F9F" opacity="0.6"/>
     `;
   } else {
-    // idle / neutral
     face = `
       <circle cx="42" cy="60" r="6" fill="#4A3300"/>
       <circle cx="78" cy="60" r="6" fill="#4A3300"/>
@@ -447,1018 +411,26 @@ function mascotSVG(mood){
   }
   return base + face;
 }
+function setMascot(el, mood){ if(el) el.innerHTML = mascotSVG(mood); }
+function bumpMascot(el){ if(!el) return; el.classList.remove('bounce'); void el.offsetWidth; el.classList.add('bounce'); }
 
-function setMascot(el, mood){
-  if(!el) return;
-  el.innerHTML = mascotSVG(mood);
-}
-
-function bumpMascot(el, kind){
-  if(!el) return;
-  el.classList.remove('bounce','wobble');
-  void el.offsetWidth; // reflow to restart animation
-  el.classList.add(kind === 'good' ? 'bounce' : 'wobble');
-}
-
-const START_LINES = [
-  "Ready to out-ethics everyone in your cohort?",
-  "Five hearts. No mercy. Let's drill.",
-  "Warning: contains 100% more fiduciary duty than average.",
-  "I've got Standards. Literally seven of them.",
-  "Let's find out if you'd dissociate from a violation."
-];
-const CORRECT_LINES = [
-  "Nailed it!", "Boom. Ethical.", "Yes! Standard, upheld.", "Clean sweep energy.", "You'd make a great compliance officer.", "Correct — no cautionary letter for you."
-];
-const WRONG_LINES = [
-  "Oof, not quite.", "That one's a violation.", "Nope — dissociate from that answer.", "Close, but the DRC wants a word.", "Not this time, champ."
-];
-
-/* ---------------- Question bank ---------------- */
-const QUESTIONS = [
-  {
-    tag: "Standard I(A) · Knowledge of the Law",
-    q: "Which of the following is a correct statement of a member's or candidate's duty under the Code and Standards?",
-    options: [
-      "In the absence of specific applicable law or other regulatory requirements, the Code and Standards govern the member's or candidate's actions.",
-      "A member or candidate is required to comply only with applicable local laws, rules, regulations, or customs, even though the Code and Standards may impose a higher duty.",
-      "A member or candidate who trades in a market with no local rules on material nonpublic information may take investment action based on that information."
-    ],
-    correct: 0,
-    explain: "Standard I(A) sets a floor, not a ceiling. Where no law applies, the Code and Standards fill the gap — and wherever the law is stricter, the law wins; wherever the Code is stricter, the Code wins."
-  },
-  {
-    tag: "Standard VII(B) · Reference to CFA Program",
-    q: "Quinn just sat for the CFA Level III exam. He updates his résumé: \"In finishing the CFA Program, I improved my skills related to researching investments and managing portfolios. I will be eligible for the CFA Charter upon completion of the required work experience.\"",
-    options: [
-      "Quinn violated the Code by claiming he improved his skills through the CFA Program.",
-      "Quinn violated the Code by incorrectly stating that he is eligible for the charter.",
-      "Quinn did not violate the Code with his résumé update."
-    ],
-    correct: 1,
-    explain: "He hasn't received his results yet, so implying that work experience is the only box left to tick overstates his position. Members and candidates may only make accurate, factual claims about their status."
-  },
-  {
-    tag: "GIPS · Who Can Claim Compliance",
-    q: "Which of the following statements regarding GIPS compliance is correct?",
-    options: [
-      "Asset owners that manage assets in-house can claim compliance with the GIPS standards.",
-      "Software that calculates performance in a manner consistent with GIPS can claim compliance with the standards.",
-      "Firms can comply with GIPS by limiting their compliance claims to the provisions they've chosen to follow."
-    ],
-    correct: 0,
-    explain: "Compliance is an all-or-nothing, firm-wide claim — you can't cherry-pick provisions, and software or index providers can't claim compliance on their own. Asset owners managing their own assets are an exception and can claim it."
-  },
-  {
-    tag: "GIPS · Who Can Claim Compliance",
-    q: "Which of the following cannot claim compliance with the GIPS standards?",
-    options: [
-      "Investment management firms.",
-      "Software vendors.",
-      "Private pension funds managing their own assets."
-    ],
-    correct: 1,
-    explain: "GIPS compliance belongs to the entity managing the assets — a firm or an asset owner. A performance-calculation vendor is a tool, not a claimant, so it cannot itself be GIPS-compliant."
-  },
-  {
-    tag: "Standard I(B) · Independence & Objectivity",
-    q: "An issuer-paid research analyst is offered business-class travel and a five-star hotel by the company she is about to write a report on, for an on-site visit that would otherwise cost far less. What should she do?",
-    options: [
-      "Accept, since due diligence site visits are a normal part of issuer-paid research.",
-      "Accept only economy travel and modest lodging paid by her own firm, or reimburse the issuer for the difference.",
-      "Decline the visit entirely, since any issuer-paid research creates an unmanageable conflict."
-    ],
-    correct: 1,
-    explain: "Standard I(B) doesn't ban issuer-paid research or site visits — it bans letting the issuer's generosity shape the analysis. The fix is modest, self-funded (or reimbursed) travel, not avoiding the visit altogether."
-  },
-  {
-    tag: "Standard I(C) · Misrepresentation",
-    q: "A portfolio manager tells a prospect his firm 'guarantees' a minimum 8% annual return on a new equity strategy, based on back-tested model performance. Is this a violation?",
-    options: [
-      "No — back-tested figures are a reasonable basis for the guarantee.",
-      "Yes — guaranteeing investment performance is a misrepresentation, since future returns can't be assured.",
-      "No — as long as the disclosure mentions the return is 'expected,' not certain."
-    ],
-    correct: 1,
-    explain: "Standard I(C) specifically flags guaranteeing a specific return as a classic misrepresentation. Markets are not guaranteeable, no matter how strong the back-test."
-  },
-  {
-    tag: "Standard I(D) · Misconduct",
-    q: "An analyst is convicted of tax fraud on his personal income taxes — entirely unrelated to his job duties. Does this violate the Code?",
-    options: [
-      "No, because it involves his personal finances, not his professional work.",
-      "Yes, because it reflects dishonesty and reflects poorly on his professional reputation, regardless of the personal/professional line.",
-      "Only if his employer's compliance manual explicitly covers personal tax matters."
-    ],
-    correct: 1,
-    explain: "Standard I(D) covers conduct involving fraud, deceit, or dishonesty that reflects on the member's professional reputation — it isn't limited to acts committed at the office."
-  },
-  {
-    tag: "Standard II(A) · Material Nonpublic Information",
-    q: "An analyst overhears a CEO's private conversation about an unannounced merger while getting coffee in an airport lounge — pure luck, not solicited. Can she trade or tip clients on it?",
-    options: [
-      "Yes, since she did nothing wrong to obtain the information.",
-      "No — once information is both material and nonpublic, acting on it is prohibited regardless of how innocently it was obtained.",
-      "Yes, but only for her personal account, not client accounts."
-    ],
-    correct: 1,
-    explain: "The mosaic theory protects legitimate piecing-together of public and non-material data — it does not cover material nonpublic information, however it was received."
-  },
-  {
-    tag: "Standard II(B) · Market Manipulation",
-    q: "A trader places a large series of buy and sell orders in a thinly traded stock with no intention of them executing, purely to create the appearance of trading interest. This is:",
-    options: [
-      "Acceptable liquidity provision.",
-      "A violation — information-based and transaction-based manipulation are both prohibited.",
-      "A violation only if the trader personally profits from the resulting price move."
-    ],
-    correct: 1,
-    explain: "Standard II(B) prohibits practices that distort prices or artificially inflate trading volume with intent to mislead — profit isn't required for it to be a violation."
-  },
-  {
-    tag: "Standard III(B) · Fair Dealing",
-    q: "A firm has a favorable research change on a stock. Which allocation approach best satisfies Standard III(B)?",
-    options: [
-      "Call the largest institutional clients first, since they generate the most revenue.",
-      "Disseminate the change to all clients entitled to it simultaneously, according to a pre-established, disclosed policy.",
-      "Give priority to clients who ask for updates most frequently."
-    ],
-    correct: 1,
-    explain: "Fair dealing doesn't mean identical treatment for everyone (different service tiers can exist) — it means treating clients fairly according to a disclosed, systematic process, not favoritism by size or persistence."
-  },
-  {
-    tag: "Standard III(C) · Suitability",
-    q: "A retired client with a stated goal of capital preservation asks her adviser to put a large position into a speculative biotech stock she saw trending online. What should the adviser do?",
-    options: [
-      "Execute the trade — clients have the right to direct their own trades.",
-      "Refuse outright and end the relationship.",
-      "Explain how the position fits (or conflicts with) her stated objectives and risk profile before proceeding, documenting the discussion."
-    ],
-    correct: 2,
-    explain: "Standard III(C) requires judging suitability against the client's stated objectives, and clients can still direct unsuitable trades after being clearly informed — the adviser's job is to inform, document, and manage the rest of the portfolio suitably."
-  },
-  {
-    tag: "Standard III(E) · Preservation of Confidentiality",
-    q: "A wealth manager is subpoenaed by a court to disclose confidential client account information as part of a legal proceeding. Under the Code, she should:",
-    options: [
-      "Refuse to comply, since client confidentiality is absolute under Standard III(E).",
-      "Comply with the legally binding subpoena, disclosing only what is legally required.",
-      "Comply only if the client gives written permission first."
-    ],
-    correct: 1,
-    explain: "Confidentiality under the Code yields to legal requirements such as a valid court order or subpoena — members must comply, but should limit disclosure to what's actually compelled."
-  },
-  {
-    tag: "Standard IV(A) · Loyalty to Employer",
-    q: "While still employed, an analyst quietly downloads his firm's proprietary client contact list and pricing models to take with him to a new job. This is:",
-    options: [
-      "Fine, as long as he doesn't use the materials until after he officially resigns.",
-      "A violation — misappropriating confidential firm property is a breach of loyalty regardless of when it's used.",
-      "Fine, since client relationships belong to the individual advisor, not the firm."
-    ],
-    correct: 1,
-    explain: "Standard IV(A) permits preparing to compete (e.g., quietly job-hunting), but taking the employer's confidential records or trade secrets crosses into misappropriation — a clear violation."
-  },
-  {
-    tag: "Standard IV(B) · Additional Compensation Arrangements",
-    q: "A financial adviser is offered a $500 gift card by a satisfied client at year-end, unprompted and unrelated to any specific referral or transaction. Under the Code, he should:",
-    options: [
-      "Decline it — Standard IV(B) prohibits accepting any gift from a client.",
-      "Accept it freely with no obligation, since Standard IV(B) covers only arrangements with third parties, not gifts from the client being served.",
-      "Accept it, but only after disclosing it to and getting consent from his employer, since it could affect his objectivity toward that client."
-    ],
-    correct: 2,
-    explain: "Standard IV(B) is about compensation from parties other than the primary employer that could create competing loyalties. A client gift doesn't create third-party bias, but firm policy typically still requires disclosure to the employer to monitor for undue influence — most firms require reporting gifts above a threshold."
-  },
-  {
-    tag: "Standard IV(C) · Responsibilities of Supervisors",
-    q: "A junior trader on a supervisor's team is caught front-running client orders. The supervisor claims she wasn't personally involved and had no knowledge of it. Is she still exposed under the Code?",
-    options: [
-      "No — Standard IV(C) only applies to people who directly participate in the violation.",
-      "Yes — supervisors must establish and enforce reasonable compliance procedures to detect and prevent violations by those they supervise.",
-      "No, unless she was explicitly informed of the trader's plan in advance."
-    ],
-    correct: 1,
-    explain: "Standard IV(C) holds supervisors responsible for a reasonable system of controls and follow-through — a lack of personal involvement doesn't excuse an inadequate compliance system."
-  },
-  {
-    tag: "Standard V(A) · Diligence and Reasonable Basis",
-    q: "An analyst issues a 'buy' recommendation based entirely on a single sell-side report from another bank, without any independent verification of the underlying assumptions. This most likely:",
-    options: [
-      "Satisfies Standard V(A), since relying on outside research is common industry practice.",
-      "Violates Standard V(A), which requires a reasonable, independent basis for recommendations and actions.",
-      "Is acceptable only if the source report is clearly cited in the client-facing note."
-    ],
-    correct: 1,
-    explain: "Members may use third-party research, but Standard V(A) requires them to have reasonable grounds to trust its soundness — a single unverified external report, taken at face value, generally isn't sufficient basis on its own."
-  },
-  {
-    tag: "Standard V(C) · Record Retention",
-    q: "Which of the following best reflects a firm's obligation under Standard V(C) regarding investment records?",
-    options: [
-      "Records only need to be kept for recommendations that led to an actual client trade.",
-      "Firms should maintain records supporting their investment analyses, recommendations, and actions, retained per regulatory requirements (or seven years absent a specific rule).",
-      "Verbal recommendations made over the phone are exempt from record-keeping requirements."
-    ],
-    correct: 1,
-    explain: "Standard V(C) calls for retaining the records that back up recommendations and actions — including ones that didn't result in a trade — for the applicable regulatory period, or seven years as a default."
-  },
-  {
-    tag: "Standard VI(A) · Disclosure of Conflicts",
-    q: "A CFA charterholder sits on the board of a public company and also covers that company as a sell-side analyst. What does the Code require?",
-    options: [
-      "Resign from either the board seat or the analyst coverage role — holding both is inherently prohibited.",
-      "Nothing further, as long as his research remains objective in his own judgment.",
-      "Clearly and prominently disclose the board seat in every research report covering that company."
-    ],
-    correct: 2,
-    explain: "Standard VI(A) doesn't ban the dual role outright — it requires full and clear disclosure of the conflict so clients can judge the research with that context in mind."
-  },
-  {
-    tag: "Standard VI(B) · Priority of Transactions",
-    q: "A portfolio manager wants to buy shares of a small-cap stock for her personal account the same week she plans to build a position for client accounts. Under Standard VI(B), she should:",
-    options: [
-      "Trade for clients first, or at minimum simultaneously with her personal account, and never trade ahead of clients.",
-      "Buy for herself first to prove her conviction in the idea before committing client capital.",
-      "Avoid disclosing the personal trade at all, since it's a small position."
-    ],
-    correct: 0,
-    explain: "Standard VI(B) requires that client transactions get priority over personal ones (or at least equal timing) — front-running clients with your own trades is the core violation this standard targets."
-  },
-  {
-    tag: "Standard VI(C) · Referral Fees",
-    q: "An adviser refers clients to an estate-planning attorney and receives a $200 referral fee per client sent, which he does not mention to the clients. This is:",
-    options: [
-      "Acceptable, since referral arrangements are a normal part of professional networking.",
-      "A violation — compensation for referrals must be disclosed to clients so they can weigh the recommendation's objectivity.",
-      "A violation only if the referral fee exceeds a regulatory dollar threshold."
-    ],
-    correct: 1,
-    explain: "Standard VI(C) doesn't prohibit referral arrangements — it requires disclosing them (amount or nature of the benefit) so the client can judge whether the referral is truly in their interest."
-  },
-  {
-    tag: "GIPS · Composites",
-    q: "A firm has a poorly performing discretionary portfolio in its Global Equity strategy. To improve the composite's reported return, the firm quietly reclassifies the account into a broader 'multi-strategy' composite. This is:",
-    options: [
-      "Permitted, since firms have full discretion over how they define composites.",
-      "A violation of GIPS composite construction principles, which exist precisely to prevent cherry-picking performance by moving underperforming accounts.",
-      "Permitted as long as the client whose account was moved consents."
-    ],
-    correct: 1,
-    explain: "GIPS requires strict, pre-defined, objective criteria for composite membership specifically to stop firms from shuffling weak performers out of a composite to flatter the numbers."
-  },
-  {
-    tag: "GIPS · Verification",
-    q: "A firm undergoes GIPS verification and receives a clean verification report. What does this confirm?",
-    options: [
-      "That every individual performance report the firm has ever issued is numerically accurate.",
-      "That the firm's policies and procedures for the entire firm comply with GIPS requirements and have been implemented on a firm-wide basis.",
-      "That the firm's investment returns are competitive relative to its peer group."
-    ],
-    correct: 1,
-    explain: "Verification is firm-wide and process-focused — it tests whether the firm's GIPS policies exist and are applied consistently. It does not certify the accuracy of any one specific composite presentation."
-  },
-  {
-    tag: "Intro to Ethics · Code vs. Standards",
-    q: "Which best distinguishes a Code of Ethics from Standards of Conduct within a profession?",
-    options: [
-      "A Code of Ethics gives explicit, specific rules for behavior, while Standards of Conduct are a broad values statement.",
-      "A Code of Ethics is a general written set of principles, values, and expectations, while Standards of Conduct set explicit rules and a benchmark for minimally acceptable behavior.",
-      "The two terms are interchangeable and are always issued by the same body."
-    ],
-    correct: 1,
-    explain: "The Code sets the general tone — values, beliefs, and expectations for members. The Standards translate that into explicit, specific rules that clarify the Code and mark the floor for acceptable conduct."
-  },
-  {
-    tag: "Intro to Ethics · Code of Ethics",
-    q: "A Code of Ethics is best described as:",
-    options: [
-      "An explicit checklist covering every possible situation an employee might face.",
-      "A written set of principles communicating an organization's values, beliefs, and general expectations for members' behavior.",
-      "A legally binding regulatory filing required of every financial firm."
-    ],
-    correct: 1,
-    explain: "Codes of Ethics are written by universities, employers, and professional bodies alike to communicate shared values and a general guide for how to act — not an exhaustive rulebook or a legal filing."
-  },
-  {
-    tag: "Professions & Trust",
-    q: "Which of the following is NOT one of the ways a profession typically establishes public trust?",
-    options: [
-      "Setting high standards of entry and encouraging continuing education.",
-      "Prioritizing members' own profits ahead of client interests whenever the two conflict.",
-      "Monitoring professional conduct and holding members accountable to a shared code."
-    ],
-    correct: 1,
-    explain: "Trust is built through high entry standards, continuing education, a client-first orientation, shared norms of practitioner behavior, accountability, and engagement/mentoring — putting member profit ahead of clients undermines all of it."
-  },
-  {
-    tag: "Professions & Trust",
-    q: "Which activity most directly helps a profession establish and maintain public trust?",
-    options: [
-      "Encouraging continuing education so members maintain current knowledge.",
-      "Keeping entry requirements minimal so membership grows as quickly as possible.",
-      "Leaving enforcement of ethical conduct entirely to individual firms, with no oversight body."
-    ],
-    correct: 0,
-    explain: "High standards of entry, ongoing education, client focus, normalized practitioner behavior, accountability, and mentoring are the pillars professions use to earn and keep public trust."
-  },
-  {
-    tag: "Challenges to Ethical Behavior",
-    q: "Behavioral research on ethical decision-making generally finds that professionals:",
-    options: [
-      "Accurately and objectively assess their own ability to act ethically under pressure.",
-      "Tend to overestimate their own ability to make ethical decisions, especially in the moment.",
-      "Are effectively immune to situational pressure once they've completed ethics training."
-    ],
-    correct: 1,
-    explain: "One of the core challenges to ethical behavior is overconfidence — people generally believe they'd act more ethically under pressure than they actually do when the moment arrives."
-  },
-  {
-    tag: "Challenges to Ethical Behavior",
-    q: "Which of the following is an example of a situational influence that can pressure someone toward unethical behavior?",
-    options: [
-      "A clearly written, well-enforced code of ethics.",
-      "Loyalty to a supervisor who is asking the employee to bend the rules.",
-      "A robust, independent compliance department."
-    ],
-    correct: 1,
-    explain: "Classic situational influences include pressure from coworkers, money and prestige, loyalty to supervisors or colleagues, and the pull of a coming promotion — strong compliance programs exist to counteract these, not cause them."
-  },
-  {
-    tag: "Challenges to Ethical Behavior",
-    q: "What is a common way firms mitigate situational pressures toward unethical behavior?",
-    options: [
-      "Removing written policies so employees rely purely on personal judgment.",
-      "Establishing strong compliance programs.",
-      "Tying compensation purely to short-term revenue with no other checks."
-    ],
-    correct: 1,
-    explain: "Firms counter situational pressures like peer pressure, money, prestige, and loyalty conflicts by building strong, independent compliance programs rather than leaving ethics to individual willpower alone."
-  },
-  {
-    tag: "Ethical vs. Legal Conduct",
-    q: "Which statement best captures the relationship between legal and ethical standards?",
-    options: [
-      "Legal and ethical standards are always identical, so following the law is always sufficient.",
-      "Legal and ethical standards can differ — the law can lag behind, vary by jurisdiction, and be open to interpretation — so ethical conduct must go beyond what is legally required.",
-      "Ethical standards are subordinate to legal standards and never require more than the law demands."
-    ],
-    correct: 1,
-    explain: "Legal and ethical standards are not always the same. Because law takes time to develop, is open to interpretation, and varies by jurisdiction, true ethical conduct has to go further than the legal minimum."
-  },
-  {
-    tag: "Ethical vs. Legal Conduct",
-    q: "According to the framework distinguishing ethical and legal conduct, new laws can sometimes:",
-    options: [
-      "Eliminate all possibility of unethical behavior in a given area.",
-      "Inadvertently create new opportunities to act unethically, such as loopholes.",
-      "Automatically align perfectly with every firm's existing code of ethics."
-    ],
-    correct: 1,
-    explain: "New laws don't just close gaps — they can open new ones. A freshly written rule can create loopholes or unintended incentives that a well-crafted code of ethics would otherwise have prevented."
-  },
-  {
-    tag: "Enforcement · DRC vs. PCP",
-    q: "Within CFA Institute's enforcement structure, which body actually enforces the Standards through sanctions, and which one investigates and monitors day-to-day compliance?",
-    options: [
-      "The Disciplinary Review Committee (DRC) enforces the Standards; the Professional Conduct Program (PCP) staff monitors compliance and responds to inquiries.",
-      "The Professional Conduct Program (PCP) enforces the Standards; the Disciplinary Review Committee only monitors compliance.",
-      "Both bodies perform the identical function and exist purely for redundancy."
-    ],
-    correct: 0,
-    explain: "The two work together but have distinct roles: PCP staff monitor compliance and handle inquiries day to day, while the DRC is the body that actually enforces the Standards."
-  },
-  {
-    tag: "Enforcement · Professional Conduct Program",
-    q: "Who is required to comply with the Code and Standards under CFA Institute's Professional Conduct Program?",
-    options: [
-      "Only current CFA charterholders, not candidates.",
-      "Both members and candidates.",
-      "Only candidates who are actively sitting for an exam that week."
-    ],
-    correct: 1,
-    explain: "The Code and Standards bind both members and candidates alike — enrollment in the CFA Program itself brings a candidate under the Professional Conduct Program's authority."
-  },
-  {
-    tag: "Enforcement · PCP Inquiry Triggers",
-    q: "Which of the following can prompt a Professional Conduct Program (PCP) inquiry?",
-    options: [
-      "A firm's routine internal budget review.",
-      "A written complaint, a member's self-disclosure, or a report from a CFA exam proctor.",
-      "A client simply asking their adviser for a lower fee."
-    ],
-    correct: 1,
-    explain: "PCP inquiries can be triggered by self-disclosure, a written complaint, evidence of misconduct surfacing in public sources, a report from a CFA exam proctor, or irregularities in exam scores."
-  },
-  {
-    tag: "Enforcement · PCP Inquiry Triggers",
-    q: "Which of the following is NOT one of the typical ways a Professional Conduct Program inquiry can be triggered?",
-    options: [
-      "Self-disclosure by the member or candidate.",
-      "A competitor firm's marketing brochure.",
-      "A written complaint alleging misconduct."
-    ],
-    correct: 1,
-    explain: "Inquiries come from self-disclosure, written complaints, evidence of misconduct in public sources, CFA proctor reports, or exam scores — not from a rival firm's marketing material."
-  },
-  {
-    tag: "Enforcement · PCP Outcomes & Appeal",
-    q: "After a Professional Conduct Program investigation concludes, which of the following is a possible outcome?",
-    options: [
-      "No disciplinary action, a cautionary letter, or formal disciplinary action.",
-      "Automatic revocation of the candidate's university degree.",
-      "Automatic criminal prosecution in every case."
-    ],
-    correct: 0,
-    explain: "An investigation can close with no action taken, a cautionary letter, or disciplinary action — criminal prosecution and degree revocation aren't within the PCP's authority."
-  },
-  {
-    tag: "Enforcement · PCP Outcomes & Appeal",
-    q: "If a member or candidate is issued a disciplinary sanction by the PCP, what recourse do they have?",
-    options: [
-      "None — all sanctions are final and cannot be challenged.",
-      "They may reject the sanction and appeal to a hearing panel.",
-      "They may only appeal by filing a lawsuit in civil court."
-    ],
-    correct: 1,
-    explain: "A member or candidate who disagrees with a proposed sanction can reject it and take their case to a hearing panel for review."
-  },
-  {
-    tag: "Code of Ethics · Structure",
-    q: "How many core components make up the CFA Institute Code of Ethics?",
-    options: ["Four", "Six", "Seven"],
-    correct: 1,
-    explain: "The Code of Ethics is built from six components — while the Standards of Professional Conduct, a separate document, are organized into seven categories. It's easy to mix the two counts up."
-  },
-  {
-    tag: "Code of Ethics · Components",
-    q: "Which of the following is one of the six components of the CFA Institute Code of Ethics?",
-    options: [
-      "Place the integrity of the investment profession and clients' interests above their own personal interests.",
-      "Maximize personal compensation within the bounds of the law, above all else.",
-      "Report all client trading activity to the media promptly for transparency."
-    ],
-    correct: 0,
-    explain: "The Code calls on members to place the profession's integrity and client interests ahead of their own — alongside acting with integrity and competence, using independent judgment, practicing ethically, promoting market integrity, and maintaining competence."
-  },
-  {
-    tag: "Standards of Professional Conduct · Structure",
-    q: "Which of the following correctly lists the seven Standards of Professional Conduct in order?",
-    options: [
-      "Professionalism; Integrity of Capital Markets; Duties to Clients; Duties to Employers; Investment Analysis, Recommendations & Actions; Conflicts of Interest; Responsibilities as a CFA Institute Member or Candidate.",
-      "Integrity of Capital Markets; Professionalism; Conflicts of Interest; Duties to Employers; Duties to Clients; Investment Analysis; Responsibilities as a Member.",
-      "Professionalism; Duties to Clients; Duties to Employers; Integrity of Capital Markets; Conflicts of Interest; Responsibilities as a Member; Investment Analysis."
-    ],
-    correct: 0,
-    explain: "The seven Standards run: I Professionalism, II Integrity of Capital Markets, III Duties to Clients, IV Duties to Employers, V Investment Analysis/Recommendations/Actions, VI Conflicts of Interest, VII Responsibilities as a CFA Institute Member or Candidate."
-  },
-  {
-    tag: "Standards of Professional Conduct · Structure",
-    q: "Which Standard number covers 'Conflicts of Interest'?",
-    options: ["Standard IV", "Standard VI", "Standard II"],
-    correct: 1,
-    explain: "Conflicts of Interest is Standard VI — the second-to-last category, right before Responsibilities as a CFA Institute Member or Candidate (Standard VII)."
-  },
-  {
-    tag: "Standard I(A) · Knowledge of the Law",
-    q: "Under Standard I(A), if a local law is less strict than the CFA Institute Code and Standards, which one governs the member's conduct?",
-    options: [
-      "Members must follow the less strict local law.",
-      "Members must comply with whichever is stricter — in this case, the Code and Standards.",
-      "Members may choose whichever is more convenient for their firm."
-    ],
-    correct: 1,
-    explain: "Standard I(A) always points to the stricter of the two: applicable law or the Code and Standards, whichever imposes the higher duty."
-  },
-  {
-    tag: "Standard I(A) · Knowledge of the Law",
-    q: "Under Standard I(A), what is the escalation path when a member becomes aware of an ongoing violation of the law that they cannot stop?",
-    options: [
-      "Continue participating as instructed by superiors.",
-      "Understand their responsibility to report it if required, and if the violation persists, dissociate from the activity.",
-      "Immediately notify the media before doing anything else."
-    ],
-    correct: 1,
-    explain: "It's your responsibility to be aware of applicable laws; if a violation occurs you may have to report it, and if it persists, you must dissociate from the activity."
-  },
-  {
-    tag: "Standard I(B) · Independence & Objectivity",
-    q: "According to Standard I(B), if a member accepts issuer-paid travel and entertainment for a research trip, what must be true for this to remain acceptable?",
-    options: [
-      "The arrangements should be as lavish as the issuer is willing to provide.",
-      "Arrangements should be modestly arranged, and any such benefits should be disclosed.",
-      "Nothing further is required as long as the trip is business-related."
-    ],
-    correct: 1,
-    explain: "Accepting issuer-paid travel isn't automatically a violation, but the arrangements should stay modest, and the benefit should be disclosed."
-  },
-  {
-    tag: "Standard I(B) · Independence & Objectivity",
-    q: "Which of the following is specifically flagged as a violation example under Standard I(B)?",
-    options: [
-      "Accepting a flat, pre-agreed research subscription fee paid by a client.",
-      "Accepting a variable fee that depends on whether a report turns out favorable or unfavorable.",
-      "Accepting a fixed hourly consulting rate agreed upon in advance."
-    ],
-    correct: 1,
-    explain: "A fee that varies based on the conclusion of the report — rather than the work performed — creates exactly the kind of incentive Standard I(B) is designed to prevent."
-  },
-  {
-    tag: "Standard I(C) · Misrepresentation",
-    q: "Under Standard I(C), a misrepresentation is defined as:",
-    options: [
-      "Any untrue statement or omission of fact.",
-      "Only a deliberately falsified financial statement.",
-      "Any statement a client later happens to disagree with."
-    ],
-    correct: 0,
-    explain: "Misrepresentation is broad by design — it covers both saying something untrue and leaving out a material fact, not just outright falsified documents."
-  },
-  {
-    tag: "Standard I(C) · Misrepresentation",
-    q: "Which of the following is NOT one of the areas Standard I(C) misrepresentation typically covers?",
-    options: [
-      "Performance reporting and social media posts.",
-      "Claims about work completed for an employer.",
-      "A member's personal opinions on topics unrelated to their professional activities."
-    ],
-    correct: 2,
-    explain: "Standard I(C) reaches impacts on investment practice, performance reporting, social media, omissions, plagiarism, and claims about work for an employer — not personal opinions outside the professional context."
-  },
-  {
-    tag: "Standard I(D) · Misconduct",
-    q: "Standard I(D) Misconduct prohibits professional conduct involving:",
-    options: [
-      "Dishonesty, fraud, or deceit, or any act that reflects adversely on professional reputation, integrity, or competence.",
-      "Only conduct that results in a criminal conviction.",
-      "Only conduct that directly harms a client's portfolio."
-    ],
-    correct: 0,
-    explain: "The standard is written broadly to cover dishonesty, fraud, and deceit, plus any act reflecting adversely on reputation, integrity, or competence — not just conduct that's already been prosecuted or that harmed a portfolio."
-  },
-  {
-    tag: "Standard II(A) · Mosaic Theory",
-    q: "Under the mosaic theory, an analyst who combines public information with immaterial nonpublic information to reach an investment conclusion:",
-    options: [
-      "Has violated Standard II(A) regardless of the underlying information's materiality.",
-      "May use that conclusion to make investment decisions, since neither ingredient was material nonpublic information.",
-      "Must get client consent before acting on the conclusion."
-    ],
-    correct: 1,
-    explain: "The mosaic theory protects piecing together public information and non-material, nonpublic information to reach a conclusion — that conclusion can be used to make investment decisions."
-  },
-  {
-    tag: "Standard II(A) · Material Nonpublic Information",
-    q: "Under Standard II(A), information is generally considered 'material' if:",
-    options: [
-      "Disclosing it would likely affect the security's price, or investors would want to know it before investing.",
-      "It came directly from the company's CEO, regardless of content.",
-      "It has already appeared in a press release."
-    ],
-    correct: 0,
-    explain: "Materiality turns on price impact or investor relevance — information that's already public, by definition, isn't the nonpublic half of 'material nonpublic information.'"
-  },
-  {
-    tag: "Standard II(B) · Market Manipulation",
-    q: "Spreading false rumors about a company to move its stock price is an example of which type of market manipulation under Standard II(B)?",
-    options: [
-      "Transaction-based manipulation.",
-      "Information-based manipulation.",
-      "Mosaic theory application."
-    ],
-    correct: 1,
-    explain: "Information-based manipulation works by spreading false or misleading information — like rumors — specifically to affect a security's price."
-  },
-  {
-    tag: "Standard II(B) · Market Manipulation",
-    q: "Trading a security purely to create a false impression of trading activity and inflate its price is an example of:",
-    options: [
-      "Information-based manipulation.",
-      "Transaction-based manipulation.",
-      "Fair dealing."
-    ],
-    correct: 1,
-    explain: "Transaction-based manipulation uses the trades themselves — not false information — to give a misleading impression of activity or interest in a security."
-  },
-  {
-    tag: "Standard III(A) · Loyalty, Prudence, and Care",
-    q: "Does Standard III(A) (Loyalty, Prudence, and Care) impose a fiduciary duty on every member or candidate?",
-    options: [
-      "Yes, always, regardless of the nature of the relationship.",
-      "No — the Standard itself does not impose a fiduciary duty; the actual duty owed depends on the nature of the relationship with the client.",
-      "Only on candidates, never on full members."
-    ],
-    correct: 1,
-    explain: "Standard III(A) does not itself create a fiduciary duty — whether a fiduciary duty exists depends on the specific relationship between the member and the client."
-  },
-  {
-    tag: "Standard III(A) · Loyalty, Prudence, and Care",
-    q: "Under Standard III(A), what must a member do with 'soft dollars' generated through client brokerage?",
-    options: [
-      "Use them to benefit the client whose brokerage generated them.",
-      "Use them exclusively to cover the member's own research subscriptions.",
-      "Return them directly to the client as cash."
-    ],
-    correct: 0,
-    explain: "Soft commission policies require that soft dollars be used to benefit the client who generated them — not diverted for the member's unrelated benefit."
-  },
-  {
-    tag: "Standard III(A) · Loyalty, Prudence, and Care",
-    q: "Under Standard III(A), when a member votes client proxies on the client's behalf, they must:",
-    options: [
-      "Always vote in line with company management's recommendation.",
-      "Vote in an informed and responsible manner consistent with the client's interest.",
-      "Avoid voting altogether to sidestep any conflict."
-    ],
-    correct: 1,
-    explain: "Members can vote proxies for clients, but the vote must be informed and responsible, not a rubber stamp for management or an excuse to abstain from a real duty."
-  },
-  {
-    tag: "Standard III(B) · Fair Dealing",
-    q: "Standard III(B) Fair Dealing requires that clients be treated:",
-    options: [
-      "Fairly, not necessarily equally — clients on different service tiers can be treated differently.",
-      "Identically in all respects, with zero exceptions.",
-      "Equally, meaning every client must get the same recommendations at the same time regardless of service level."
-    ],
-    correct: 0,
-    explain: "Fair dealing means fairly, not equally — clients may have different objectives or pay for different service levels, but everyone entitled to a recommendation must get a fair opportunity to act on it."
-  },
-  {
-    tag: "Standard III(B) · Fair Dealing",
-    q: "Under Standard III(B), how should a member treat a family member's account that is also a client account?",
-    options: [
-      "Family accounts can be given priority since there's less liability at stake.",
-      "It should be treated like any other client account.",
-      "Family accounts are exempt from fair dealing requirements entirely."
-    ],
-    correct: 1,
-    explain: "When allocating securities or opportunities, a family member's client account gets the same treatment as any other client account — no special priority and no special disadvantage."
-  },
-  {
-    tag: "Standard III(C) · Suitability",
-    q: "Under Standard III(C), when a member manages a portfolio to a specific mandate, strategy, or style rather than giving individualized advice, what must their recommendations and actions be consistent with?",
-    options: [
-      "The member's personal read on what looks attractive in the market right now.",
-      "The stated objectives and constraints of that mandate or strategy.",
-      "Whatever the single largest investor in that strategy happens to prefer."
-    ],
-    correct: 1,
-    explain: "For pooled or mandate-based strategies, suitability is judged against the mandate's own stated objectives and constraints — not case-by-case for each underlying investor."
-  },
-  {
-    tag: "Standard III(D) · Performance Presentation",
-    q: "Under Standard III(D), if a member gives a brief performance presentation that can't include full detail, what must they do?",
-    options: [
-      "Nothing further is required.",
-      "Make full supporting details available to the client upon request.",
-      "Avoid presenting any performance figures at all."
-    ],
-    correct: 1,
-    explain: "Brief presentations are fine, but the member must be ready to provide the complete underlying details on request — brevity can't be used to hide the full picture."
-  },
-  {
-    tag: "Standard III(E) · Preservation of Confidentiality",
-    q: "Under Standard III(E), a member is permitted to disclose confidential client information in all of the following situations EXCEPT:",
-    options: [
-      "The information concerns illegal activity on the part of the client.",
-      "Disclosure is required by law.",
-      "The member simply believes disclosure would be more convenient for their own business."
-    ],
-    correct: 2,
-    explain: "The three carve-outs are: client illegal activity, legally required disclosure, or the client's own permission — mere convenience for the member isn't one of them."
-  },
-  {
-    tag: "Standard IV(A) · Loyalty to Employer",
-    q: "Under Standard IV(A), when a member becomes aware of wrongdoing that also implicates market integrity, which duty takes priority over loyalty to the employer?",
-    options: [
-      "Loyalty to the employer always comes first, no matter what.",
-      "Integrity of capital markets and loyalty to clients take priority over loyalty to the employer.",
-      "The member should stay silent to avoid any conflict."
-    ],
-    correct: 1,
-    explain: "Whistleblowing situations flip the usual hierarchy: protecting the integrity of capital markets and loyalty to clients outrank loyalty to the employer."
-  },
-  {
-    tag: "Standard IV(A) · Loyalty to Employer",
-    q: "Under Standard IV(A), before engaging in independent practice that could compete with their employer, a member must:",
-    options: [
-      "Simply begin the independent practice without informing anyone.",
-      "Notify their employer first and obtain consent.",
-      "Wait until after resigning to ever mention it."
-    ],
-    correct: 1,
-    explain: "Independent, competing practice while still employed requires notifying the employer and getting their consent first — not launching it quietly on the side."
-  },
-  {
-    tag: "Standard IV(B) · Additional Compensation Arrangements",
-    q: "Under Standard IV(B), a member who wants to accept compensation from a source other than their employer that could compete with or conflict with the employer's interest must first:",
-    options: [
-      "Do nothing — outside compensation is always fine.",
-      "Obtain written consent from all parties involved.",
-      "Simply mention it informally to a coworker."
-    ],
-    correct: 1,
-    explain: "Standard IV(B) requires written consent from all parties before accepting compensation that could reasonably be expected to create a conflict with the employer's interest."
-  },
-  {
-    tag: "Standard V(A) · Diligence and Reasonable Basis",
-    q: "When relying on second- or third-party research, Standard V(A) requires members to:",
-    options: [
-      "Accept the conclusions at face value, since due diligence was already done by the source.",
-      "Take responsibility for ensuring that research has a sound basis, understanding its parameters and limitations.",
-      "Only use it internally, never in client-facing recommendations."
-    ],
-    correct: 1,
-    explain: "Using outside research doesn't outsource the duty — members still need to understand its basis, assumptions, and limitations before relying on it."
-  },
-  {
-    tag: "Standard V(A) · Diligence and Reasonable Basis",
-    q: "Under Standard V(A), when using quantitative research, members must:",
-    options: [
-      "Understand the parameters, assumptions, and limitations of the model.",
-      "Simply trust the output, since it's mathematically derived.",
-      "Avoid ever questioning a model built by a senior colleague."
-    ],
-    correct: 0,
-    explain: "A model's math doesn't excuse the user from understanding what it assumes and where it breaks down — that understanding is part of the reasonable basis requirement."
-  },
-  {
-    tag: "Standard V(A) · Diligence and Reasonable Basis",
-    q: "Under Standard V(A), when members participate in group research, the published conclusion should represent:",
-    options: [
-      "Only the most senior analyst's personal view.",
-      "The consensus of the group.",
-      "Whichever view produces the most attractive-sounding recommendation."
-    ],
-    correct: 1,
-    explain: "Group research findings should reflect the group's actual consensus, not be dictated by seniority or reshaped to fit a preferred narrative."
-  },
-  {
-    tag: "Standard V(B) · Communication with Clients",
-    q: "Under Standard V(B), members must disclose to clients:",
-    options: [
-      "The basic format and general principles of their investment process, and promptly disclose material changes to it.",
-      "Every internal model formula, regardless of complexity.",
-      "Nothing, as long as performance is strong."
-    ],
-    correct: 0,
-    explain: "Clients are entitled to understand the general shape of how their investments are being analyzed and selected — and to be told promptly if that process materially changes."
-  },
-  {
-    tag: "Standard V(B) · Communication with Clients",
-    q: "Under Standard V(B), when presenting investment analysis and recommendations, members must:",
-    options: [
-      "Blend fact and opinion together for a more persuasive narrative.",
-      "Distinguish between fact and opinion.",
-      "Omit opinions entirely and present only raw data."
-    ],
-    correct: 1,
-    explain: "Clients need to know what's verified fact versus the analyst's judgment call — the Standard requires the two be kept clearly distinguishable."
-  },
-  {
-    tag: "Standard V(B) · Communication with Clients",
-    q: "Does Standard V(B)'s communication requirement apply only to formal written research reports?",
-    options: [
-      "Yes, informal conversations are exempt.",
-      "No — it applies across different forms of communication, including in-person meetings and phone calls.",
-      "Yes, only regulator-filed documents are covered."
-    ],
-    correct: 1,
-    explain: "The disclosure and fact/opinion requirements travel with the communication itself, whatever form it takes — a verbal client call carries the same obligations as a written report."
-  },
-  {
-    tag: "Standard V(C) · Record Retention",
-    q: "Under Standard V(C), whose responsibility does record retention generally fall to?",
-    options: [
-      "The individual member personally, indefinitely, even after leaving the firm.",
-      "The firm.",
-      "CFA Institute directly."
-    ],
-    correct: 1,
-    explain: "Recordkeeping responsibility generally sits with the firm, and the resulting records are the firm's property, not the individual member's."
-  },
-  {
-    tag: "Standard V(C) · Record Retention",
-    q: "Under Standard V(C), which of the following counts as a record that may need to be retained?",
-    options: [
-      "Only formal, finished research reports.",
-      "A broad range of materials, including emails, texts, meeting notes, and model inputs and outputs.",
-      "Only documents that were ultimately shared directly with clients."
-    ],
-    correct: 1,
-    explain: "Record retention is meant to be comprehensive — supporting materials like meeting notes, model inputs/outputs, and even texts or emails can all count."
-  },
-  {
-    tag: "Standard VI(A) · Disclosure of Conflicts",
-    q: "Under Standard VI(A), disclosures of conflicts of interest must be:",
-    options: [
-      "Buried in fine print so as not to alarm clients.",
-      "Prominent, delivered in plain language, and communicated effectively.",
-      "Optional if the member personally believes the conflict is minor."
-    ],
-    correct: 1,
-    explain: "A technically-present disclosure that's hidden in dense fine print doesn't satisfy Standard VI(A) — it has to be prominent, plain-language, and effectively communicated."
-  },
-  {
-    tag: "Standard VI(B) · Priority of Transactions",
-    q: "Under Standard VI(B), investment transactions for clients and employers must have priority over:",
-    options: [
-      "Transactions in which the member or candidate is the beneficial owner.",
-      "Transactions for other, unrelated clients.",
-      "Transactions initiated by the compliance department."
-    ],
-    correct: 0,
-    explain: "Client and employer transactions come first — trades where the member personally benefits as the owner must not jump ahead of them."
-  },
-  {
-    tag: "Standard VI(B) · Priority of Transactions",
-    q: "Under Standard VI(B), 'beneficial owner' includes accounts belonging to:",
-    options: [
-      "Only the member's own personal brokerage account.",
-      "The member's own account, plus other accounts they may benefit from, such as a spouse's or child's account.",
-      "Any account held at the same brokerage firm, regardless of who owns it."
-    ],
-    correct: 1,
-    explain: "Beneficial ownership reaches beyond the member's own name — accounts of a spouse, children, or other immediate family members the member could benefit from are included too."
-  },
-  {
-    tag: "Standard VI(B) · Priority of Transactions",
-    q: "Under Standard VI(B), if a member becomes aware of pending client trades before they're executed, they should:",
-    options: [
-      "Place a personal trade first to benefit from the anticipated price move.",
-      "Not act on that information for personal gain.",
-      "Tip a friend so at least someone profits from it."
-    ],
-    correct: 1,
-    explain: "Knowledge of pending client trades can't be used for personal advantage — that's exactly the front-running scenario Standard VI(B) is meant to prevent."
-  },
-  {
-    tag: "Standard VI(C) · Referral Fees",
-    q: "Under Standard VI(C), what must members disclose regarding referral arrangements?",
-    options: [
-      "Nothing, since referrals are a normal part of business development.",
-      "Any compensation, consideration, or benefit received from or paid to others for referring clients or recommending products and services.",
-      "Only referral fees above a specific CFA Institute-mandated dollar threshold."
-    ],
-    correct: 1,
-    explain: "Referral fees of any size need to be disclosed to the employer, clients, and prospective clients as appropriate — there's no minimum-dollar carve-out in the Standard itself."
-  },
-  {
-    tag: "Standard VII(A) · Conduct in CFA Programs",
-    q: "Under Standard VII(A), which of the following is prohibited for CFA exam candidates?",
-    options: [
-      "Sharing their own general opinion about how difficult the exam felt.",
-      "Sharing specific exam questions or the specific topics that were tested.",
-      "Studying using CFA Institute's own official curriculum."
-    ],
-    correct: 1,
-    explain: "Candidates can talk about their general impressions of an exam, but disclosing specific questions or exactly what topics were tested crosses into violating exam confidentiality."
-  },
-  {
-    tag: "Standard VII(A) · Conduct in CFA Programs",
-    q: "Under Standard VII(A), members and candidates must not engage in any conduct that:",
-    options: [
-      "Involves publicly commenting on the exam's difficulty level.",
-      "Compromises the reputation or integrity of CFA Institute, the CFA designation, or CFA Institute's programs.",
-      "Involves studying with a study group."
-    ],
-    correct: 1,
-    explain: "The standard is about protecting CFA Institute's programs and the designation's integrity — general commentary on exam difficulty or normal study-group prep isn't what it targets."
-  },
-  {
-    tag: "Standard VII(B) · Reference to the CFA Designation",
-    q: "Under Standard VII(B), when referring to their CFA credentials, members and candidates must not:",
-    options: [
-      "Mention that they hold the CFA charter at all.",
-      "Misrepresent or exaggerate the meaning or implications of CFA Institute membership, the designation, or candidacy.",
-      "List the CFA designation on a business card."
-    ],
-    correct: 1,
-    explain: "Members and candidates can absolutely reference their status — what's prohibited is misrepresenting or exaggerating what that status actually means."
-  },
-  {
-    tag: "Standard VII(B) · Reference to the CFA Designation",
-    q: "Under Standard VII(B), what must a CFA member do annually to maintain their status?",
-    options: [
-      "Retake a portion of the Level I exam.",
-      "Complete the Professional Conduct Statement and pay applicable membership fees.",
-      "Publish a new piece of original research."
-    ],
-    correct: 1,
-    explain: "Maintaining active member status requires annually completing the professional conduct statement and paying the applicable membership fees — not a retest or a publication requirement."
-  },
-  {
-    tag: "Standard VII(B) · Reference to the CFA Designation",
-    q: "Under Standard VII(B), how must an active candidate describe their status in the CFA Program?",
-    options: [
-      "They may claim a 'partial CFA designation' based on the levels they've passed.",
-      "They must clearly state they are a 'candidate' in the program and must not claim any type of partial designation.",
-      "They may use the CFA charter mark with an asterisk noting candidacy."
-    ],
-    correct: 1,
-    explain: "There's no such thing as a partial charter — candidates must identify clearly as a 'candidate' and can't imply they've earned any fraction of the full designation."
-  },
-  {
-    tag: "GIPS · The Problem It Solves",
-    q: "Before GIPS, which sneaky trick let a firm's track record look better than it really was?",
-    options: [
-      "Publishing only 'representative accounts' — cherry-picked, top-performing portfolios instead of the full picture.",
-      "Using a third-party auditor to double-check every number.",
-      "Reporting returns net of all fees, every time, with no exceptions."
-    ],
-    correct: 0,
-    explain: "Before GIPS, firms could show off a handful of star portfolios as 'representative' while hiding the rest of the (often mediocre) book — hardly representative at all."
-  },
-  {
-    tag: "GIPS · The Problem It Solves",
-    q: "'Survivorship bias' in performance reporting means:",
-    options: [
-      "Poorly performing portfolios are quietly dropped from the numbers, leaving only the winners.",
-      "Only portfolios older than 10 years are shown.",
-      "Returns are adjusted downward to be conservative."
-    ],
-    correct: 0,
-    explain: "If the losers disappear from the sample, the survivors make the average look a lot healthier than reality — classic survivorship bias."
-  },
-  {
-    tag: "GIPS · Objectives",
-    q: "Which of these is NOT a stated objective of the GIPS standards?",
-    options: [
-      "Instill investor confidence in reported performance data.",
-      "Promote fair, global competition among investment firms.",
-      "Guarantee that every GIPS-compliant firm outperforms its benchmark."
-    ],
-    correct: 2,
-    explain: "GIPS makes performance reporting consistent and comparable — it says nothing about guaranteeing good returns. Nobody can promise that, GIPS-compliant or not."
-  },
-  {
-    tag: "GIPS · Who Can Claim Compliance",
-    q: "A pure investment consultant who advises on strategy but never actually manages client money — can they claim GIPS compliance?",
-    options: [
-      "Yes, consultants are always eligible.",
-      "No — only if they also manage assets themselves.",
-      "Yes, but only for their largest clients."
-    ],
-    correct: 1,
-    explain: "GIPS compliance belongs to firms (or asset owners) that actually manage assets. Giving advice without managing money doesn't qualify."
-  },
-  {
-    tag: "GIPS · Fundamentals of Compliance",
-    q: "True or false: a firm can claim to be 'mostly' GIPS compliant, covering the sections that suit them best.",
-    options: [
-      "True — partial compliance is fine as long as it's disclosed.",
-      "False — compliance is all-or-nothing across the entire firm.",
-      "True, but only for firms under a certain size."
-    ],
-    correct: 1,
-    explain: "GIPS is a package deal: compliance applies firm-wide and it's all-or-nothing. There's no 'compliant on Tuesdays' option."
-  },
-  {
-    tag: "GIPS · Composites",
-    q: "Under GIPS, which portfolios MUST be included in at least one composite?",
-    options: [
-      "Only the firm's best-performing portfolios.",
-      "All actual, fee-paying, discretionary portfolios that fit a given strategy.",
-      "Only portfolios the client specifically asks to have included."
-    ],
-    correct: 1,
-    explain: "Every actual, fee-paying, discretionary portfolio has to land in at least one composite — no quietly leaving the underperformers out."
-  },
-  {
-    tag: "GIPS · Fundamentals of Compliance",
-    q: "Under GIPS, if a client imposes restrictions that stop a manager from actually implementing the intended strategy, that portfolio is treated as:",
-    options: [
-      "Discretionary, since the manager still technically holds trading authority.",
-      "Non-discretionary, since the restrictions interfere with implementing the strategy.",
-      "Automatically excluded from the firm's AUM entirely."
-    ],
-    correct: 1,
-    explain: "Discretion isn't just about who can click 'trade' — if client-imposed limits stop the manager from actually running the strategy, GIPS treats the portfolio as non-discretionary."
-  },
-  {
-    tag: "GIPS · Independent Verification",
-    q: "A firm hires an outside verifier who checks just its flagship composite and gives it a thumbs-up. Does this satisfy GIPS verification?",
-    options: [
-      "Yes — verifying the top composite is enough.",
-      "No — verification has to cover the entire firm, not a single composite.",
-      "Yes, as long as that composite is the largest by AUM."
-    ],
-    correct: 1,
-    explain: "Verification is a firm-wide check on policies and procedures — spot-checking one composite, however big, doesn't count as GIPS verification."
-  }
+const HOME_LINES = [
+  "Standards I–VII. Let's make them stick.",
+  "58 cards. Every Standard, every sub-letter.",
+  "Flip. Recall. Repeat. That's the whole app.",
+  "Let's see if III(B) rings a bell yet."
 ];
 
 /* ---------------- State ---------------- */
-let order = [];
-let idx = 0;
-let hearts = 5;
-let sessionXp = 0;
-let sessionCorrect = 0;
-let answered = false;
-let stats = { xp:0, streak:0, bestStreak:0, lastPracticeDate:null };
-
 const $ = (id) => document.getElementById(id);
+let selectedSections = new Set(SECTIONS.map(s => s.key));
+let deck = [];
+let dIdx = 0;
+let flipped = false;
+let gotItCount = 0;
+let learningCount = 0;
+let missedThisRound = [];
+let mastered = new Set();
 
 function shuffle(arr){
   const a = arr.slice();
@@ -1469,207 +441,191 @@ function shuffle(arr){
   return a;
 }
 function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-
-/* ---------------- Confetti ---------------- */
-function burstConfetti(){
-  const colors = ['#FFC93C','#5B4FE8','#3FBF6F','#FF5A6E','#8B82F5'];
-  const appEl = $('appRoot');
-  const rect = appEl.getBoundingClientRect();
-  for(let i=0;i<18;i++){
-    const p = document.createElement('div');
-    p.className = 'confetti-piece';
-    p.style.left = (rect.left + Math.random()*rect.width) + 'px';
-    p.style.background = colors[Math.floor(Math.random()*colors.length)];
-    p.style.animationDuration = (0.9 + Math.random()*0.6) + 's';
-    p.style.top = rect.top + 'px';
-    document.body.appendChild(p);
-    setTimeout(() => p.remove(), 1700);
-  }
-}
+function sectionByKey(key){ return SECTIONS.find(s => s.key === key); }
 
 /* ---------------- Persistence ---------------- */
-async function loadStats(){
+async function loadMastered(){
   try{
-    const res = await window.storage.get('ethics-drill:stats');
+    const res = await window.storage.get('ethics-flashcards:mastered');
     if(res && res.value){
-      stats = JSON.parse(res.value);
+      mastered = new Set(JSON.parse(res.value));
     }
-  }catch(e){ /* no saved stats yet, or storage unavailable — start fresh */ }
-  renderHeader();
+  }catch(e){ /* fine — starts empty if unavailable */ }
+  renderMasteredStat();
 }
-
-async function saveStats(){
+async function saveMastered(){
   try{
-    await window.storage.set('ethics-drill:stats', JSON.stringify(stats));
-  }catch(e){ /* storage unavailable — session progress still works, just won't persist */ }
+    await window.storage.set('ethics-flashcards:mastered', JSON.stringify(Array.from(mastered)));
+  }catch(e){ /* progress just won't persist */ }
 }
-
-function todayStr(){
-  return new Date().toISOString().slice(0,10);
-}
-
-function bumpStreakForToday(){
-  const today = todayStr();
-  if(stats.lastPracticeDate === today){
-    // already practiced today, streak unchanged
-  } else {
-    const y = new Date();
-    y.setDate(y.getDate()-1);
-    const yesterday = y.toISOString().slice(0,10);
-    stats.streak = (stats.lastPracticeDate === yesterday) ? stats.streak + 1 : 1;
-    stats.lastPracticeDate = today;
-  }
-  stats.bestStreak = Math.max(stats.bestStreak || 0, stats.streak);
-}
-
-/* ---------------- Render helpers ---------------- */
-function renderHeader(){
-  $('streakVal').textContent = stats.streak || 0;
-  $('xpVal').textContent = stats.xp || 0;
-  $('bestStreakPill').textContent = stats.bestStreak || 0;
-  $('totalQCount').textContent = QUESTIONS.length;
-}
-
-function renderHearts(){
-  const row = $('heartsRow');
-  row.innerHTML = '';
-  for(let i=0;i<5;i++){
-    const span = document.createElement('span');
-    span.className = 'seal' + (i >= hearts ? ' lost' : '');
-    span.textContent = '❤️';
-    span.style.fontSize = '15px';
-    span.style.lineHeight = '1';
-    row.appendChild(span);
-  }
+function renderMasteredStat(){
+  $('masteredVal').textContent = mastered.size;
 }
 
 /* ---------------- Screens ---------------- */
-function showStart(){
-  $('startScreen').classList.remove('hidden');
-  $('quizScreen').classList.add('hidden');
-  $('resultScreen').classList.add('hidden');
-  $('screenLabel').textContent = 'Standard Streak';
-  $('progressArea').style.visibility = 'hidden';
-  setMascot($('startMascot'), 'happy');
-  $('startBubble').textContent = pick(START_LINES);
-  renderHeader();
+function showHome(){
+  hideAll();
+  $('homeScreen').classList.remove('hidden');
+  $('screenLabel').textContent = 'The Standards';
+  $('progressArea').classList.add('hidden');
+  setMascot($('homeMascot'), 'happy');
+  $('homeBubble').textContent = pick(HOME_LINES);
+  renderMasteredStat();
 }
 
-function startSession(){
-  order = shuffle(QUESTIONS);
-  idx = 0;
-  hearts = 5;
-  sessionXp = 0;
-  sessionCorrect = 0;
-  $('startScreen').classList.add('hidden');
-  $('resultScreen').classList.add('hidden');
-  $('quizScreen').classList.remove('hidden');
-  $('progressArea').style.visibility = 'visible';
-  $('screenLabel').textContent = 'Drilling';
-  renderQuestion();
+function showSectionSelect(){
+  hideAll();
+  $('sectionScreen').classList.remove('hidden');
+  $('screenLabel').textContent = 'Choose Standards';
+  $('progressArea').classList.add('hidden');
+  renderSectionList();
 }
 
-function renderQuestion(){
-  answered = false;
-  const item = order[idx];
-  $('qTag').textContent = item.tag.toUpperCase();
-  $('qText').textContent = item.q;
-  $('qCounter').textContent = (idx+1) + ' / ' + order.length;
-  $('progressFill').style.width = Math.round((idx / order.length) * 100) + '%';
-  renderHearts();
+function hideAll(){
+  ['homeScreen','sectionScreen','cardScreen','resultScreen'].forEach(id => $(id).classList.add('hidden'));
+}
 
-  const optWrap = $('qOptions');
-  optWrap.innerHTML = '';
-  const letters = ['A','B','C'];
-  item.options.forEach((opt, i) => {
-    const b = document.createElement('button');
-    b.className = 'option';
-    b.innerHTML = '<span class="letter">'+letters[i]+'</span><span>'+opt+'</span>';
-    b.onclick = () => selectAnswer(i, b);
-    optWrap.appendChild(b);
+function renderSectionList(){
+  const wrap = $('sectionList');
+  wrap.innerHTML = '';
+  SECTIONS.forEach(sec => {
+    const cardsInSection = CARDS.filter(c => c.section === sec.key);
+    const masteredInSection = cardsInSection.filter(c => mastered.has(c.id)).length;
+    const chip = document.createElement('div');
+    chip.className = 'section-chip' + (selectedSections.has(sec.key) ? ' selected' : '');
+    chip.innerHTML = `
+      <div class="section-roman">${sec.roman}</div>
+      <div class="section-info">
+        <div class="section-name">${sec.label}</div>
+        <div class="section-count">${cardsInSection.length} cards · ${masteredInSection} mastered</div>
+      </div>
+      <div class="section-check">${selectedSections.has(sec.key) ? '✓' : ''}</div>
+    `;
+    chip.onclick = () => toggleSection(sec.key);
+    wrap.appendChild(chip);
   });
-
-  $('feedback').classList.remove('show','ok','no');
-  $('continueBtn').classList.add('hidden');
+  updateStartButton();
 }
 
-function selectAnswer(i, btnEl){
-  if(answered) return;
-  answered = true;
-  const item = order[idx];
-  const correct = i === item.correct;
-  const allOpts = document.querySelectorAll('#qOptions .option');
-  allOpts.forEach((el, j) => {
-    el.classList.add('disabled');
-    if(j === item.correct) el.classList.add('correct');
-    if(j === i && !correct) el.classList.add('incorrect');
-  });
+function toggleSection(key){
+  if(selectedSections.has(key)) selectedSections.delete(key);
+  else selectedSections.add(key);
+  renderSectionList();
+}
+function selectAllSections(){
+  selectedSections = new Set(SECTIONS.map(s => s.key));
+  renderSectionList();
+}
+function clearAllSections(){
+  selectedSections = new Set();
+  renderSectionList();
+}
+function updateStartButton(){
+  $('startReviewBtn').disabled = selectedSections.size === 0;
+}
 
-  const fb = $('feedback');
-  fb.classList.add('show', correct ? 'ok' : 'no');
-  $('fbHead').textContent = correct ? pick(CORRECT_LINES) : pick(WRONG_LINES);
-  $('fbText').textContent = item.explain;
-  setMascot($('fbMascot'), correct ? 'happy' : 'sad');
-  bumpMascot($('fbMascot'), correct ? 'good' : 'bad');
+function startReview(){
+  let pool = CARDS.filter(c => selectedSections.has(c.section));
+  if($('shuffleToggle').checked) pool = shuffle(pool);
+  deck = pool;
+  dIdx = 0;
+  gotItCount = 0;
+  learningCount = 0;
+  missedThisRound = [];
+  hideAll();
+  $('cardScreen').classList.remove('hidden');
+  $('screenLabel').textContent = 'Reviewing';
+  $('progressArea').classList.remove('hidden');
+  renderCard();
+}
 
-  if(correct){
-    sessionCorrect++;
-    const gained = 10;
-    sessionXp += gained;
-    stats.xp = (stats.xp || 0) + gained;
-    $('fbXp').textContent = '+' + gained + ' coins 🪙';
-    burstConfetti();
+function renderCard(){
+  flipped = false;
+  const item = deck[dIdx];
+  const sec = sectionByKey(item.section);
+  $('cardInner').classList.remove('flipped');
+  $('cardTagFront').textContent = 'STANDARD ' + sec.roman;
+  $('cardTagBack').textContent = 'STANDARD ' + sec.roman;
+  $('cardFrontText').textContent = item.front;
+  $('cardBackText').textContent = item.back;
+  $('progressFill').style.width = Math.round((dIdx/deck.length)*100) + '%';
+  $('learnBtn').disabled = true;
+  $('gotItBtn').disabled = true;
+  $('rateHint').textContent = 'Flip the card first';
+}
+
+function flipCard(){
+  flipped = !flipped;
+  $('cardInner').classList.toggle('flipped', flipped);
+  if(flipped){
+    $('learnBtn').disabled = false;
+    $('gotItBtn').disabled = false;
+    $('rateHint').textContent = 'How well did you know it?';
   } else {
-    hearts = Math.max(0, hearts - 1);
-    renderHearts();
-    $('fbXp').textContent = 'Correct answer highlighted above';
+    $('rateHint').textContent = 'Flip the card first';
   }
-
-  $('continueBtn').classList.remove('hidden');
-  $('continueBtn').textContent = (hearts === 0) ? 'See results' : (idx === order.length-1 ? 'Finish' : 'Continue');
 }
 
-function nextQuestion(){
-  if(hearts === 0 || idx === order.length-1){
-    finishSession();
-    return;
+function rateCard(gotIt){
+  const item = deck[dIdx];
+  if(gotIt){
+    gotItCount++;
+    mastered.add(item.id);
+    bumpMascot($('homeMascot'));
+  } else {
+    learningCount++;
+    missedThisRound.push(item);
+    mastered.delete(item.id);
   }
-  idx++;
-  renderQuestion();
+  saveMastered();
+  renderMasteredStat();
+
+  if(dIdx === deck.length - 1){
+    finishDeck();
+  } else {
+    dIdx++;
+    renderCard();
+  }
 }
 
-async function finishSession(){
-  $('progressFill').style.width = '100%';
-  bumpStreakForToday();
-  await saveStats();
-
-  const total = idx + 1;
-  const accuracy = Math.round((sessionCorrect / total) * 100);
-  const outOfHearts = hearts === 0;
-
-  $('quizScreen').classList.add('hidden');
+function finishDeck(){
+  hideAll();
   $('resultScreen').classList.remove('hidden');
   $('screenLabel').textContent = 'Results';
-  $('progressArea').style.visibility = 'hidden';
+  $('progressArea').classList.add('hidden');
 
-  const resultMood = outOfHearts ? 'sad' : (accuracy === 100 ? 'wink' : 'happy');
-  setMascot($('resultMascot'), resultMood);
-  if(accuracy === 100 && !outOfHearts) burstConfetti();
+  const total = deck.length;
+  const allGood = learningCount === 0;
+  setMascot($('resultMascot'), allGood ? 'wink' : 'happy');
 
-  $('resultTitle').textContent = outOfHearts ? 'Out of Hearts!' : 'Session Complete';
-  $('resultSub').textContent = outOfHearts
-    ? "Happens to the best of us — review the ones you missed and go again."
-    : (accuracy === 100 ? "Perfect run. You're basically the DRC now." : 'Solid rep. Consistency beats cramming.');
+  $('resultTitle').textContent = 'Deck Complete!';
+  $('resultSub').textContent = allGood
+    ? "Every card, mastered. You know these Standards cold."
+    : `${learningCount} card${learningCount===1?'':'s'} still need${learningCount===1?'s':''} a bit more work — totally normal.`;
 
-  $('resAccuracy').textContent = accuracy + '%';
-  $('resXp').textContent = '+' + sessionXp;
-  $('resStreak').textContent = stats.streak || 0;
+  $('resGotIt').textContent = gotItCount;
+  $('resLearning').textContent = learningCount;
+  $('resTotal').textContent = total;
 
-  renderHeader();
+  $('reviewMissedBtn').classList.toggle('hidden', missedThisRound.length === 0);
+}
+
+function reviewMissed(){
+  if(missedThisRound.length === 0) return;
+  deck = $('shuffleToggle').checked ? shuffle(missedThisRound) : missedThisRound.slice();
+  dIdx = 0;
+  gotItCount = 0;
+  learningCount = 0;
+  missedThisRound = [];
+  hideAll();
+  $('cardScreen').classList.remove('hidden');
+  $('screenLabel').textContent = 'Reviewing missed';
+  $('progressArea').classList.remove('hidden');
+  renderCard();
 }
 
 /* ---------------- Init ---------------- */
-loadStats().then(showStart);
+loadMastered().then(showHome);
 </script>
 </body>
 </html>
