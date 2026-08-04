@@ -3,26 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Standards — Flashcards</title>
+<title>The Standards — Mastery Cards</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap');
 
 :root{
-  --bg:#101B33;
-  --card:#F6F1E4;
-  --card-2:#EFE7D2;
-  --ink:#101B33;
-  --ink-soft:#5B5F6B;
-  --brass:#B8912F;
-  --brass-dark:#8A6D1F;
-  --brass-light:#D9B96A;
-  --good:#3F6B4A;
-  --good-bg:#E3ECE2;
-  --good-dark:#2A4E33;
-  --learn:#B8912F;
-  --learn-bg:#F3E7C8;
-  --learn-dark:#8A6D1F;
-  --line: rgba(16,27,51,0.12);
+  --bg:#EEF2FC;
+  --card:#FFFFFF;
+  --card-2:#F3F6FD;
+  --ink:#1B2440;
+  --ink-soft:#6B7690;
+  --primary:#2F5FE0;
+  --primary-dark:#1E44B0;
+  --primary-light:#7FA6F5;
+  --gold:#FFC93C;
+  --gold-dark:#E0A700;
+  --r1:#E23F8C; /* rating 1 */
+  --r2:#FF7A33; /* rating 2 */
+  --r3:#FFC93C; /* rating 3 */
+  --r4:#4CAF6D; /* rating 4 */
+  --r5:#2F5FE0; /* rating 5 */
+  --line: rgba(27,36,64,0.08);
+  --shadow: 0 20px 40px -18px rgba(31,55,140,0.28);
 }
 
 *{box-sizing:border-box;}
@@ -30,10 +32,10 @@ html,body{margin:0;padding:0;}
 body{
   min-height:100vh;
   background:
-    radial-gradient(circle at 15% -10%, rgba(184,145,47,0.18), transparent 45%),
-    radial-gradient(circle at 100% 110%, rgba(184,145,47,0.10), transparent 40%),
+    radial-gradient(circle at 12% -10%, rgba(255,201,60,0.20), transparent 42%),
+    radial-gradient(circle at 100% 105%, rgba(47,95,224,0.20), transparent 48%),
     var(--bg);
-  font-family:'Inter', system-ui, sans-serif;
+  font-family:'Plus Jakarta Sans', system-ui, sans-serif;
   color:var(--ink);
   display:flex;
   align-items:center;
@@ -44,163 +46,228 @@ body{
 .app{
   width:100%;
   max-width:440px;
-  min-height:660px;
+  min-height:680px;
   background:var(--card);
-  border-radius:24px;
-  box-shadow:0 24px 50px -18px rgba(0,0,0,0.5), 0 0 0 1px rgba(184,145,47,0.25);
+  border-radius:30px;
+  box-shadow: var(--shadow), 0 0 0 1px rgba(47,95,224,0.06);
   overflow:hidden;
   position:relative;
   display:flex;
   flex-direction:column;
 }
 
+/* ---------- Top bar ---------- */
 .topbar{
-  padding:16px 18px 14px;
-  background:var(--bg);
-  color:var(--card);
+  padding:18px 20px 16px;
+  background:linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color:#fff;
+  position:relative;
+  overflow:hidden;
+}
+.topbar:before{
+  content:"";
+  position:absolute; top:-40px; right:-30px; width:140px; height:140px;
+  background:radial-gradient(circle, rgba(255,255,255,0.16), transparent 70%);
+  border-radius:50%;
 }
 .eyebrow{
-  font-family:'IBM Plex Mono', monospace;
-  font-size:12.5px;
-  font-weight:600;
-  letter-spacing:.04em;
+  font-family:'Manrope', sans-serif;
+  font-size:13.5px;
+  font-weight:700;
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:10px;
+  position:relative;
 }
 .stat{
-  display:flex; align-items:center; gap:4px;
-  font-family:'IBM Plex Mono', monospace;
-  font-size:12.5px; font-weight:600;
-  background:rgba(246,241,228,0.14);
-  padding:4px 9px;
+  display:flex; align-items:center; gap:5px;
+  font-family:'Manrope', sans-serif;
+  font-size:12.5px; font-weight:700;
+  background:rgba(255,255,255,0.18);
+  padding:5px 10px;
   border-radius:100px;
 }
-.progress-track{ height:9px; border-radius:8px; background:rgba(246,241,228,0.14); overflow:hidden; }
-.progress-fill{ height:100%; border-radius:8px; background:linear-gradient(90deg, var(--brass), var(--brass-light)); width:0%; transition:width .35s ease; }
+.progress-track{ height:8px; border-radius:8px; background:rgba(255,255,255,0.22); overflow:hidden; position:relative; }
+.progress-fill{ height:100%; border-radius:8px; background:linear-gradient(90deg, var(--gold), #FFE08A); width:0%; transition:width .35s ease; }
 
-.stage{ flex:1; display:flex; flex-direction:column; padding:22px 20px 20px; position:relative; }
+.stage{ flex:1; display:flex; flex-direction:column; padding:24px 20px 20px; position:relative; }
 .hidden{ display:none !important; }
 
-/* ---------- Mascot ---------- */
-.mascot{ width:92px; height:92px; margin:0 auto; display:block; filter:drop-shadow(0 8px 14px rgba(16,27,51,0.25)); }
-.mascot.bounce{ animation: bounce .6s ease; }
-@keyframes bounce{ 0%{transform:translateY(0) scale(1);} 30%{transform:translateY(-12px) scale(1.05);} 60%{transform:translateY(0) scale(0.97);} 100%{transform:translateY(0) scale(1);} }
-.bubble{
-  background:var(--card-2); border-radius:14px; padding:9px 14px;
-  font-family:'Fraunces', serif; font-weight:600; font-size:14px;
-  color:var(--brass-dark); text-align:center; margin:10px auto 0; max-width:290px;
+/* ---------- Mastery ring ---------- */
+.ring-wrap{ position:relative; width:168px; height:168px; margin:6px auto 4px; }
+.ring-wrap svg{ width:100%; height:100%; transform:rotate(-90deg); }
+.ring-bg{ fill:none; stroke:var(--card-2); stroke-width:12; }
+.ring-fg{ fill:none; stroke:url(#ringGrad); stroke-width:12; stroke-linecap:round; transition:stroke-dashoffset .8s cubic-bezier(.4,.2,.2,1); }
+.ring-center{
+  position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
 }
+.ring-pct{ font-family:'Manrope', sans-serif; font-weight:800; font-size:34px; color:var(--ink); line-height:1; }
+.ring-label{ font-family:'Manrope', sans-serif; font-weight:700; font-size:11.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.04em; margin-top:4px; }
 
 /* ---------- Home screen ---------- */
-.home-screen{ text-align:center; display:flex; flex-direction:column; align-items:center; flex:1; gap:4px; padding-top:4px; }
-h1.title{ font-family:'Fraunces', serif; font-weight:700; font-size:27px; margin:12px 0 4px; color:var(--ink); }
-.subtitle{ color:var(--ink-soft); font-size:14.5px; font-weight:500; line-height:1.5; max-width:300px; margin:0 0 18px; }
+.home-screen{ text-align:center; display:flex; flex-direction:column; align-items:center; flex:1; gap:2px; }
+.greet-bubble{
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--card-2); border-radius:100px; padding:8px 16px 8px 8px;
+  font-family:'Manrope', sans-serif; font-weight:700; font-size:13.5px; color:var(--ink);
+  margin-bottom:14px; align-self:center;
+}
+.greet-avatar{
+  width:26px; height:26px; border-radius:50%;
+  background:linear-gradient(135deg, var(--gold), var(--gold-dark));
+  display:flex; align-items:center; justify-content:center; font-size:14px;
+}
+h1.title{ font-family:'Manrope', sans-serif; font-weight:800; font-size:24px; margin:14px 0 4px; color:var(--ink); }
+.subtitle{ color:var(--ink-soft); font-size:14px; font-weight:500; line-height:1.5; max-width:300px; margin:0 0 18px; }
+
+.mini-stats{ display:flex; gap:10px; width:100%; margin-bottom:18px; }
+.mini-stat{ flex:1; background:var(--card-2); border-radius:16px; padding:12px 8px; text-align:center; }
+.mini-stat-num{ font-family:'Manrope', sans-serif; font-weight:800; font-size:18px; color:var(--primary-dark); }
+.mini-stat-label{ font-family:'Manrope', sans-serif; font-weight:700; font-size:10px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.03em; margin-top:2px; }
 
 .btn{
-  border:none; cursor:pointer; font-family:'Inter', sans-serif; font-weight:700; font-size:15.5px;
-  border-radius:14px; padding:14px 20px; width:100%; transition:transform .1s ease, box-shadow .1s ease;
+  border:none; cursor:pointer; font-family:'Manrope', sans-serif; font-weight:800; font-size:15.5px;
+  border-radius:16px; padding:15px 20px; width:100%; transition:transform .1s ease, box-shadow .1s ease, filter .15s ease;
 }
 .btn:active{ transform:translateY(3px); }
-.btn-primary{ background:var(--ink); color:var(--card); box-shadow:0 5px 0 0 #050c1c; }
-.btn-primary:active{ box-shadow:0 2px 0 0 #050c1c; }
+.btn-primary{ background:linear-gradient(135deg, var(--primary), var(--primary-dark)); color:#fff; box-shadow:0 5px 0 0 var(--primary-dark); }
+.btn-primary:active{ box-shadow:0 2px 0 0 var(--primary-dark); }
 .btn-primary:disabled{ opacity:.4; pointer-events:none; }
 .btn-ghost{ background:transparent; color:var(--ink-soft); border:2px solid var(--line); box-shadow:none; margin-top:10px; }
-.btn-good{ background:var(--good); color:#fff; box-shadow:0 5px 0 0 var(--good-dark); }
-.btn-good:active{ box-shadow:0 2px 0 0 var(--good-dark); }
-.btn-learn{ background:var(--learn); color:#fff; box-shadow:0 5px 0 0 var(--learn-dark); }
-.btn-learn:active{ box-shadow:0 2px 0 0 var(--learn-dark); }
 
 /* ---------- Section select ---------- */
 .section-screen{ display:flex; flex-direction:column; flex:1; }
 .section-header{ text-align:center; margin-bottom:14px; }
-.section-header h2{ font-family:'Fraunces', serif; font-size:19px; font-weight:700; margin:0 0 2px; }
+.section-header h2{ font-family:'Manrope', sans-serif; font-size:19px; font-weight:800; margin:0 0 2px; }
 .section-header p{ color:var(--ink-soft); font-size:13px; font-weight:500; margin:0; }
 
 .section-list{ display:flex; flex-direction:column; gap:9px; overflow-y:auto; flex:1; margin-bottom:12px; padding-right:2px; }
 .section-chip{
   display:flex; align-items:center; gap:12px;
-  border:2px solid var(--line); border-radius:14px; padding:12px 14px;
-  cursor:pointer; transition:border-color .15s, background .15s;
+  border:2px solid var(--line); border-radius:16px; padding:11px 13px;
+  cursor:pointer; transition:border-color .15s, background .15s, transform .1s;
   background:#fff;
 }
-.section-chip.selected{ border-color:var(--brass); background:var(--card-2); }
-.section-roman{
-  font-family:'Fraunces', serif; font-weight:700; font-size:17px; color:var(--brass-dark);
-  width:34px; text-align:center; flex-shrink:0;
+.section-chip:active{ transform:scale(0.99); }
+.section-chip.selected{ border-color:var(--primary); background:var(--card-2); }
+.section-icon{
+  width:38px; height:38px; border-radius:12px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Manrope', sans-serif; font-weight:800; font-size:14px; color:#fff;
 }
-.section-info{ flex:1; }
-.section-name{ font-family:'Inter', sans-serif; font-weight:700; font-size:13.5px; color:var(--ink); line-height:1.3; }
-.section-count{ font-size:11.5px; color:var(--ink-soft); font-weight:600; margin-top:2px; }
+.section-info{ flex:1; min-width:0; }
+.section-name{ font-family:'Manrope', sans-serif; font-weight:700; font-size:13.5px; color:var(--ink); line-height:1.3; }
+.section-progress-row{ display:flex; align-items:center; gap:6px; margin-top:5px; }
+.section-progress-track{ flex:1; height:5px; border-radius:6px; background:var(--card-2); overflow:hidden; }
+.section-progress-fill{ height:100%; border-radius:6px; background:linear-gradient(90deg, var(--gold-dark), var(--gold)); }
+.section-count{ font-size:10.5px; color:var(--ink-soft); font-weight:700; white-space:nowrap; }
 .section-check{
   width:22px; height:22px; border-radius:7px; border:2px solid var(--line);
   display:flex; align-items:center; justify-content:center; flex-shrink:0;
-  font-size:13px; color:#fff; font-weight:800;
+  font-size:12px; color:#fff; font-weight:800;
 }
-.section-chip.selected .section-check{ background:var(--brass); border-color:var(--brass); }
+.section-chip.selected .section-check{ background:var(--primary); border-color:var(--primary); }
 
 .quick-actions{ display:flex; gap:8px; margin-bottom:12px; }
 .link-btn{
-  background:none; border:none; font-family:'Inter', sans-serif; font-weight:700; font-size:12px;
-  color:var(--brass-dark); cursor:pointer; padding:4px 2px;
+  background:none; border:none; font-family:'Manrope', sans-serif; font-weight:700; font-size:12px;
+  color:var(--primary-dark); cursor:pointer; padding:4px 2px;
 }
 .shuffle-row{
   display:flex; align-items:center; justify-content:space-between;
-  font-family:'Inter', sans-serif; font-weight:700; font-size:13px; color:var(--ink);
-  background:var(--card-2); padding:10px 14px; border-radius:12px; margin-bottom:12px;
+  font-family:'Manrope', sans-serif; font-weight:700; font-size:13px; color:var(--ink);
+  background:var(--card-2); padding:10px 14px; border-radius:14px; margin-bottom:12px;
 }
 .switch{ position:relative; width:42px; height:24px; }
 .switch input{ opacity:0; width:0; height:0; }
 .switch-track{ position:absolute; inset:0; background:var(--line); border-radius:100px; cursor:pointer; transition:background .2s; }
 .switch-track:before{ content:""; position:absolute; width:18px; height:18px; left:3px; top:3px; background:#fff; border-radius:50%; transition:transform .2s; box-shadow:0 1px 3px rgba(0,0,0,0.25); }
-.switch input:checked + .switch-track{ background:var(--brass); }
+.switch input:checked + .switch-track{ background:var(--primary); }
 .switch input:checked + .switch-track:before{ transform:translateX(18px); }
+
+/* ---------- Overview screen ---------- */
+.overview-screen{ display:flex; flex-direction:column; flex:1; }
+.overview-list{ display:flex; flex-direction:column; gap:12px; overflow-y:auto; flex:1; margin-bottom:14px; padding-right:2px; }
+.overview-block{ border:1.5px solid var(--line); border-radius:16px; overflow:hidden; }
+.overview-block-head{
+  display:flex; align-items:center; gap:10px; padding:11px 13px;
+  color:#fff; font-family:'Manrope', sans-serif;
+}
+.overview-block-roman{
+  width:28px; height:28px; border-radius:9px; background:rgba(255,255,255,0.25);
+  display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; flex-shrink:0;
+}
+.overview-block-title{ font-weight:800; font-size:13.5px; line-height:1.3; }
+.overview-subs{ background:#fff; padding:6px 13px; }
+.overview-sub-row{
+  display:flex; align-items:baseline; gap:8px; padding:8px 0;
+  border-bottom:1px solid var(--line);
+}
+.overview-sub-row:last-child{ border-bottom:none; }
+.overview-sub-letter{
+  font-family:'JetBrains Mono', monospace; font-weight:700; font-size:11.5px; color:var(--ink-soft);
+  flex-shrink:0; width:16px;
+}
+.overview-sub-name{ font-family:'Manrope', sans-serif; font-weight:600; font-size:13px; color:var(--ink); line-height:1.35; }
 
 /* ---------- Card screen ---------- */
 .card-screen{ display:flex; flex-direction:column; flex:1; }
-.card-scene{ flex:1; perspective:1400px; margin-bottom:16px; min-height:280px; }
+.card-scene{ flex:1; perspective:1400px; margin-bottom:18px; min-height:290px; }
 .card-inner{
-  position:relative; width:100%; height:100%; min-height:280px;
+  position:relative; width:100%; height:100%; min-height:290px;
   transition:transform .5s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d; cursor:pointer;
 }
 .card-inner.flipped{ transform:rotateY(180deg); }
 .card-face{
   position:absolute; inset:0; backface-visibility:hidden;
-  border-radius:18px; padding:24px 22px; display:flex; flex-direction:column;
-  box-shadow:0 6px 0 0 var(--line), 0 10px 24px -10px rgba(16,27,51,0.25);
-  border:2px solid var(--line);
+  border-radius:22px; padding:22px 22px; display:flex; flex-direction:column;
+  box-shadow: var(--shadow);
+  border:1.5px solid var(--line);
 }
-.card-front{ background:#fff; align-items:center; justify-content:center; text-align:center; }
-.card-back{ background:var(--card-2); transform:rotateY(180deg); }
-.card-tag{
-  font-family:'IBM Plex Mono', monospace; font-size:10.5px; font-weight:700; color:var(--brass-dark);
-  background:var(--card-2); display:inline-block; padding:4px 10px; border-radius:100px; margin-bottom:16px;
-  position:absolute; top:18px; left:18px; letter-spacing:.03em;
+.card-front{ background:#fff; }
+.card-back{ background:linear-gradient(160deg, var(--card-2), #fff); transform:rotateY(180deg); }
+.card-letter{
+  width:34px; height:34px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Manrope', sans-serif; font-weight:800; font-size:16px; color:#fff;
+  margin-bottom:16px;
 }
-.card-front .card-tag{ background:var(--card-2); }
+.card-front .card-letter{ background:linear-gradient(135deg, var(--primary), var(--primary-dark)); }
+.card-back .card-letter{ background:linear-gradient(135deg, var(--gold-dark), var(--gold)); }
+.card-body{ flex:1; display:flex; align-items:center; }
 .card-front-text{
-  font-family:'Fraunces', serif; font-weight:700; font-size:22px; line-height:1.35; color:var(--ink);
+  font-family:'Manrope', sans-serif; font-weight:800; font-size:22px; line-height:1.35; color:var(--ink);
   white-space:pre-line;
 }
-.tap-hint{ font-family:'Inter', sans-serif; font-size:12px; color:var(--ink-soft); margin-top:16px; font-weight:600; }
 .card-back-text{
-  font-family:'Fraunces', serif; font-size:19px; font-weight:700; line-height:1.5; color:var(--ink);
-  white-space:pre-line; margin-top:36px; flex:1; display:flex; align-items:center;
+  font-family:'Manrope', sans-serif; font-size:19px; font-weight:700; line-height:1.5; color:var(--ink);
+  white-space:pre-line;
 }
+.tap-hint{ font-family:'Manrope', sans-serif; font-size:12px; color:var(--primary); margin-top:14px; font-weight:700; }
 
+.rate-hint{ text-align:center; font-family:'Manrope', sans-serif; font-size:13.5px; color:var(--ink); font-weight:800; margin-bottom:12px; }
 .rate-row{ display:flex; gap:10px; }
-.rate-row .btn{ flex:1; }
-.rate-hint{ text-align:center; font-family:'Inter', sans-serif; font-size:12px; color:var(--ink-soft); font-weight:700; margin-bottom:10px; }
+.rate-btn{
+  flex:1; border-radius:16px; border:none; cursor:pointer;
+  font-family:'Manrope', sans-serif; font-weight:800; font-size:15px; color:#fff;
+  display:flex; align-items:center; justify-content:center; gap:7px;
+  padding:15px 10px;
+  transition:transform .1s ease, box-shadow .1s ease;
+}
+.rate-btn:active{ transform:translateY(3px); }
+.rate-btn:disabled{ opacity:.4; pointer-events:none; }
+.rate-no{ background:var(--r2); box-shadow:0 5px 0 0 #C24E0F; }
+.rate-yes{ background:var(--r4); box-shadow:0 5px 0 0 #2E7D48; }
 
 /* ---------- Result screen ---------- */
 .result-screen{ display:flex; flex-direction:column; align-items:center; text-align:center; flex:1; justify-content:center; }
-.result-title{ font-family:'Fraunces', serif; font-size:23px; font-weight:700; margin:10px 0 4px; }
-.result-sub{ color:var(--ink-soft); font-size:13.5px; font-weight:500; margin-bottom:20px; }
-.score-grid{ display:flex; gap:10px; margin-bottom:22px; width:100%; }
-.score-card{ flex:1; background:var(--card-2); border-radius:14px; padding:14px 8px; }
-.score-num{ font-family:'Fraunces', serif; font-size:21px; font-weight:700; color:var(--brass-dark); }
-.score-label{ font-family:'IBM Plex Mono', monospace; font-size:9.5px; font-weight:600; text-transform:uppercase; color:var(--ink-soft); margin-top:2px; }
+.result-title{ font-family:'Manrope', sans-serif; font-size:22px; font-weight:800; margin:14px 0 4px; }
+.result-sub{ color:var(--ink-soft); font-size:13.5px; font-weight:500; margin-bottom:20px; max-width:290px; }
+.score-grid{ display:flex; gap:8px; margin-bottom:22px; width:100%; }
+.score-card{ flex:1; background:var(--card-2); border-radius:14px; padding:12px 6px; }
+.score-num{ font-family:'Manrope', sans-serif; font-size:19px; font-weight:800; color:var(--primary-dark); }
+.score-label{ font-family:'Manrope', sans-serif; font-size:9px; font-weight:700; text-transform:uppercase; color:var(--ink-soft); margin-top:2px; letter-spacing:.02em; }
 </style>
 </head>
 <body>
@@ -210,7 +277,7 @@ h1.title{ font-family:'Fraunces', serif; font-weight:700; font-size:27px; margin
   <div class="topbar">
     <div class="eyebrow">
       <span id="screenLabel">The Standards</span>
-      <div class="stat" id="masteredStat">✅ <span id="masteredVal">0</span> mastered</div>
+      <div class="stat">🔥 <span id="streakVal">0</span> mastered</div>
     </div>
     <div id="progressArea" class="hidden">
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
@@ -221,12 +288,36 @@ h1.title{ font-family:'Fraunces', serif; font-weight:700; font-size:27px; margin
 
     <!-- HOME SCREEN -->
     <div class="home-screen" id="homeScreen">
-      <svg class="mascot" id="homeMascot" viewBox="0 0 120 120"></svg>
-      <div class="bubble" id="homeBubble">Standards I–VII. Let's make them stick.</div>
-      <h1 class="title">Learn the Standards</h1>
-      <p class="subtitle">Flashcards for memorizing Standards I–VII and every A/B/C sub-standard — both directions, code → name and name → code.</p>
-      <div style="flex:1"></div>
+      <div class="greet-bubble"><span class="greet-avatar">🪙</span> <span id="homeGreeting">Welcome back!</span></div>
+
+      <div class="ring-wrap">
+        <svg viewBox="0 0 140 140">
+          <defs>
+            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FFC93C"/>
+              <stop offset="100%" stop-color="#2F5FE0"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring-bg" cx="70" cy="70" r="58"/>
+          <circle class="ring-fg" id="ringFg" cx="70" cy="70" r="58"/>
+        </svg>
+        <div class="ring-center">
+          <div class="ring-pct" id="ringPct">0%</div>
+          <div class="ring-label">Mastery</div>
+        </div>
+      </div>
+
+      <h1 class="title">Standards Mastery</h1>
+      <p class="subtitle">Flip a card, rate how well you knew it, and watch your mastery ring fill in.</p>
+
+      <div class="mini-stats">
+        <div class="mini-stat"><div class="mini-stat-num" id="statTotal">0</div><div class="mini-stat-label">Cards</div></div>
+        <div class="mini-stat"><div class="mini-stat-num" id="statSections">7</div><div class="mini-stat-label">Standards</div></div>
+        <div class="mini-stat"><div class="mini-stat-num" id="statMastered">0</div><div class="mini-stat-label">Mastered</div></div>
+      </div>
+
       <button class="btn btn-primary" onclick="showSectionSelect()">Choose Standards to review</button>
+      <button class="btn btn-ghost" onclick="showOverview()">📖 Browse all Standards first</button>
     </div>
 
     <!-- SECTION SELECT SCREEN -->
@@ -238,6 +329,7 @@ h1.title{ font-family:'Fraunces', serif; font-weight:700; font-size:27px; margin
       <div class="quick-actions">
         <button class="link-btn" onclick="selectAllSections()">Select all</button>
         <button class="link-btn" onclick="clearAllSections()">Clear</button>
+        <button class="link-btn" onclick="showOverview()" style="margin-left:auto;">📖 Full overview</button>
       </div>
       <div class="section-list" id="sectionList"></div>
       <div class="shuffle-row">
@@ -251,36 +343,55 @@ h1.title{ font-family:'Fraunces', serif; font-weight:700; font-size:27px; margin
       <button class="btn btn-ghost" onclick="showHome()">Back</button>
     </div>
 
+    <!-- OVERVIEW SCREEN -->
+    <div class="overview-screen hidden" id="overviewScreen">
+      <div class="section-header">
+        <h2>All Standards at a glance</h2>
+        <p>Skim before you drill — nothing to tap here</p>
+      </div>
+      <div class="overview-list" id="overviewList"></div>
+      <button class="btn btn-primary" onclick="showSectionSelect()">Start reviewing</button>
+      <button class="btn btn-ghost" onclick="showHome()">Back</button>
+    </div>
+
     <!-- CARD SCREEN -->
     <div class="card-screen hidden" id="cardScreen">
       <div class="card-scene">
         <div class="card-inner" id="cardInner" onclick="flipCard()">
           <div class="card-face card-front">
-            <div class="card-tag" id="cardTagFront">STANDARD</div>
-            <div class="card-front-text" id="cardFrontText">Prompt</div>
+            <div class="card-letter">Q</div>
+            <div class="card-body"><div class="card-front-text" id="cardFrontText">Prompt</div></div>
             <div class="tap-hint">👆 Tap to reveal the answer</div>
           </div>
           <div class="card-face card-back">
-            <div class="card-tag" id="cardTagBack">STANDARD</div>
-            <div class="card-back-text" id="cardBackText">Answer</div>
+            <div class="card-letter">A</div>
+            <div class="card-body"><div class="card-back-text" id="cardBackText">Answer</div></div>
           </div>
         </div>
       </div>
       <div class="rate-hint" id="rateHint">Flip the card first</div>
       <div class="rate-row">
-        <button class="btn btn-learn" id="learnBtn" onclick="rateCard(false)" disabled>🤔 Still learning</button>
-        <button class="btn btn-good" id="gotItBtn" onclick="rateCard(true)" disabled>💪 Got it!</button>
+        <button class="rate-btn rate-no" id="rateNo" onclick="rateCard(false)" disabled>🤔 Didn't know it</button>
+        <button class="rate-btn rate-yes" id="rateYes" onclick="rateCard(true)" disabled>💪 Knew it</button>
       </div>
     </div>
 
     <!-- RESULT SCREEN -->
     <div class="result-screen hidden" id="resultScreen">
-      <svg class="mascot" id="resultMascot" viewBox="0 0 120 120"></svg>
+      <div class="ring-wrap" style="width:120px;height:120px;">
+        <svg viewBox="0 0 140 140">
+          <circle class="ring-bg" cx="70" cy="70" r="58"/>
+          <circle class="ring-fg" id="resultRingFg" cx="70" cy="70" r="58" stroke="url(#ringGrad)"/>
+        </svg>
+        <div class="ring-center">
+          <div class="ring-pct" id="resultRingPct" style="font-size:24px;">0%</div>
+        </div>
+      </div>
       <h2 class="result-title" id="resultTitle">Deck Complete!</h2>
       <p class="result-sub" id="resultSub">Nice work.</p>
       <div class="score-grid">
-        <div class="score-card"><div class="score-num" id="resGotIt">0</div><div class="score-label">Got It</div></div>
-        <div class="score-card"><div class="score-num" id="resLearning">0</div><div class="score-label">Still Learning</div></div>
+        <div class="score-card"><div class="score-num" id="resGotIt">0</div><div class="score-label">Knew It</div></div>
+        <div class="score-card"><div class="score-num" id="resLearning">0</div><div class="score-label">Needs Work</div></div>
         <div class="score-card"><div class="score-num" id="resTotal">0</div><div class="score-label">Reviewed</div></div>
       </div>
       <button class="btn btn-primary" id="reviewMissedBtn" onclick="reviewMissed()">Review the ones I missed</button>
@@ -291,6 +402,45 @@ h1.title{ font-family:'Fraunces', serif; font-weight:700; font-size:27px; margin
 </div>
 
 <script>
+const STANDARD_DETAILS = [
+  { key:"std1", roman:"I", name:"Professionalism", subs:[
+    ["A","Knowledge of the Law"],
+    ["B","Independence & Objectivity"],
+    ["C","Misrepresentation"],
+    ["D","Misconduct"]
+  ]},
+  { key:"std2", roman:"II", name:"Integrity of Capital Markets", subs:[
+    ["A","Material Nonpublic Information"],
+    ["B","Market Manipulation"]
+  ]},
+  { key:"std3", roman:"III", name:"Duties to Clients", subs:[
+    ["A","Loyalty, Prudence and Care"],
+    ["B","Fair Dealing"],
+    ["C","Suitability"],
+    ["D","Performance Presentation"],
+    ["E","Preservation of Confidentiality"]
+  ]},
+  { key:"std4", roman:"IV", name:"Duties to Employers", subs:[
+    ["A","Loyalty"],
+    ["B","Additional Compensation Arrangements"],
+    ["C","Responsibilities of Supervisors"]
+  ]},
+  { key:"std5", roman:"V", name:"Investment Analysis, Recommendations, and Actions", subs:[
+    ["A","Diligence & Reasonable Basis"],
+    ["B","Communication with Clients and Prospective Clients"],
+    ["C","Record Retention"]
+  ]},
+  { key:"std6", roman:"VI", name:"Conflicts of Interest", subs:[
+    ["A","Disclosure of Conflicts"],
+    ["B","Priority of Transactions"],
+    ["C","Referral Fees"]
+  ]},
+  { key:"std7", roman:"VII", name:"Responsibilities as a CFA Institute Member/Candidate", subs:[
+    ["A","Conduct as Participants in CFA Programs"],
+    ["B","Reference to CFA Institute, the CFA Designation, and the CFA Program"]
+  ]}
+];
+
 const SECTIONS = [
   { key: "std1", label: "Standard I: Professionalism", roman: "I" },
   { key: "std2", label: "Standard II: Integrity of Capital Markets", roman: "II" },
@@ -361,65 +511,13 @@ const CARDS = [
   { id:57, section:"std7", front:"VII(B)", back:"Reference to CFA Institute, the CFA Designation, and the CFA Program\n\n(part of Standard VII: Responsibilities as a CFA Institute Member/Candidate)" },
   { id:58, section:"std7", front:"Which sub-standard covers:\n\n\"Reference to CFA Institute, the CFA Designation, and the CFA Program\"?", back:"VII(B)\n\n(under Standard VII: Responsibilities as a CFA Institute Member/Candidate)" },
 ];
-/* ---------------- Mascot (Penny the Coin) ---------------- */
-function mascotSVG(mood){
-  const base = `
-    <defs>
-      <radialGradient id="coinGrad" cx="35%" cy="30%" r="75%">
-        <stop offset="0%" stop-color="#FFE9A6"/>
-        <stop offset="55%" stop-color="#FFC93C"/>
-        <stop offset="100%" stop-color="#E0A700"/>
-      </radialGradient>
-    </defs>
-    <circle cx="60" cy="63" r="50" fill="url(#coinGrad)" stroke="#B5820A" stroke-width="4"/>
-    <ellipse cx="42" cy="46" rx="12" ry="7" fill="#FFF6D9" opacity="0.55"/>
-  `;
-  let face = '';
-  if(mood === 'happy'){
-    face = `
-      <circle cx="42" cy="60" r="6" fill="#4A3300"/>
-      <circle cx="78" cy="60" r="6" fill="#4A3300"/>
-      <circle cx="44" cy="58" r="1.6" fill="#fff"/>
-      <circle cx="80" cy="58" r="1.6" fill="#fff"/>
-      <path d="M40 76 Q60 96 80 76" stroke="#4A3300" stroke-width="5" fill="none" stroke-linecap="round"/>
-      <circle cx="30" cy="72" r="6" fill="#FF9F9F" opacity="0.6"/>
-      <circle cx="90" cy="72" r="6" fill="#FF9F9F" opacity="0.6"/>
-    `;
-  } else if(mood === 'think'){
-    face = `
-      <circle cx="42" cy="60" r="6" fill="#4A3300"/>
-      <path d="M70 55 Q78 51 86 55" stroke="#4A3300" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <path d="M46 80 Q60 76 74 80" stroke="#4A3300" stroke-width="5" fill="none" stroke-linecap="round"/>
-    `;
-  } else if(mood === 'wink'){
-    face = `
-      <path d="M36 60 Q42 55 48 60" stroke="#4A3300" stroke-width="5" fill="none" stroke-linecap="round"/>
-      <circle cx="78" cy="60" r="6" fill="#4A3300"/>
-      <circle cx="80" cy="58" r="1.6" fill="#fff"/>
-      <path d="M42 78 Q60 92 80 76" stroke="#4A3300" stroke-width="5" fill="none" stroke-linecap="round"/>
-      <circle cx="30" cy="72" r="6" fill="#FF9F9F" opacity="0.6"/>
-      <circle cx="90" cy="72" r="6" fill="#FF9F9F" opacity="0.6"/>
-    `;
-  } else {
-    face = `
-      <circle cx="42" cy="60" r="6" fill="#4A3300"/>
-      <circle cx="78" cy="60" r="6" fill="#4A3300"/>
-      <circle cx="44" cy="58" r="1.6" fill="#fff"/>
-      <circle cx="80" cy="58" r="1.6" fill="#fff"/>
-      <path d="M46 80 Q60 86 74 80" stroke="#4A3300" stroke-width="5" fill="none" stroke-linecap="round"/>
-    `;
-  }
-  return base + face;
-}
-function setMascot(el, mood){ if(el) el.innerHTML = mascotSVG(mood); }
-function bumpMascot(el){ if(!el) return; el.classList.remove('bounce'); void el.offsetWidth; el.classList.add('bounce'); }
 
-const HOME_LINES = [
-  "Standards I–VII. Let's make them stick.",
-  "58 cards. Every Standard, every sub-letter.",
-  "Flip. Recall. Repeat. That's the whole app.",
-  "Let's see if III(B) rings a bell yet."
+const RING_CIRCUMFERENCE = 2 * Math.PI * 58; // r=58
+
+const GREETINGS = [
+  "Welcome back!", "Ready when you are.", "Let's build that streak.", "Good to see you again."
 ];
+const SECTION_COLORS = ["#2F5FE0","#E23F8C","#4CAF6D","#FF7A33","#8B5CF6","#0EA5A0","#D6317B"];
 
 /* ---------------- State ---------------- */
 const $ = (id) => document.getElementById(id);
@@ -427,10 +525,10 @@ let selectedSections = new Set(SECTIONS.map(s => s.key));
 let deck = [];
 let dIdx = 0;
 let flipped = false;
-let gotItCount = 0;
-let learningCount = 0;
+let highCount = 0;   // ratings 4-5
+let lowCount = 0;    // ratings 1-3
 let missedThisRound = [];
-let mastered = new Set();
+let mastered = new Set(); // card ids rated 4 or 5
 
 function shuffle(arr){
   const a = arr.slice();
@@ -442,24 +540,42 @@ function shuffle(arr){
 }
 function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 function sectionByKey(key){ return SECTIONS.find(s => s.key === key); }
+function sectionColor(key){
+  const i = SECTIONS.findIndex(s => s.key === key);
+  return SECTION_COLORS[i % SECTION_COLORS.length];
+}
 
 /* ---------------- Persistence ---------------- */
 async function loadMastered(){
   try{
-    const res = await window.storage.get('ethics-flashcards:mastered');
+    const res = await window.storage.get('ethics-mastery:mastered');
     if(res && res.value){
       mastered = new Set(JSON.parse(res.value));
     }
   }catch(e){ /* fine — starts empty if unavailable */ }
-  renderMasteredStat();
+  renderMasteryUI();
 }
 async function saveMastered(){
   try{
-    await window.storage.set('ethics-flashcards:mastered', JSON.stringify(Array.from(mastered)));
+    await window.storage.set('ethics-mastery:mastered', JSON.stringify(Array.from(mastered)));
   }catch(e){ /* progress just won't persist */ }
 }
-function renderMasteredStat(){
-  $('masteredVal').textContent = mastered.size;
+
+function setRing(el, pctEl, pct){
+  const offset = RING_CIRCUMFERENCE * (1 - pct/100);
+  el.style.strokeDasharray = RING_CIRCUMFERENCE;
+  el.style.strokeDashoffset = offset;
+  pctEl.textContent = pct + '%';
+}
+
+function renderMasteryUI(){
+  const total = CARDS.length;
+  const pct = total ? Math.round((mastered.size/total)*100) : 0;
+  $('streakVal').textContent = mastered.size;
+  $('statTotal').textContent = total;
+  $('statSections').textContent = SECTIONS.length;
+  $('statMastered').textContent = mastered.size;
+  setRing($('ringFg'), $('ringPct'), pct);
 }
 
 /* ---------------- Screens ---------------- */
@@ -468,9 +584,8 @@ function showHome(){
   $('homeScreen').classList.remove('hidden');
   $('screenLabel').textContent = 'The Standards';
   $('progressArea').classList.add('hidden');
-  setMascot($('homeMascot'), 'happy');
-  $('homeBubble').textContent = pick(HOME_LINES);
-  renderMasteredStat();
+  $('homeGreeting').textContent = pick(GREETINGS);
+  renderMasteryUI();
 }
 
 function showSectionSelect(){
@@ -482,7 +597,39 @@ function showSectionSelect(){
 }
 
 function hideAll(){
-  ['homeScreen','sectionScreen','cardScreen','resultScreen'].forEach(id => $(id).classList.add('hidden'));
+  ['homeScreen','sectionScreen','overviewScreen','cardScreen','resultScreen'].forEach(id => $(id).classList.add('hidden'));
+}
+
+function showOverview(){
+  hideAll();
+  $('overviewScreen').classList.remove('hidden');
+  $('screenLabel').textContent = 'Overview';
+  $('progressArea').classList.add('hidden');
+  renderOverview();
+}
+
+function renderOverview(){
+  const wrap = $('overviewList');
+  wrap.innerHTML = '';
+  STANDARD_DETAILS.forEach((std, i) => {
+    const color = SECTION_COLORS[i % SECTION_COLORS.length];
+    const block = document.createElement('div');
+    block.className = 'overview-block';
+    const subsHtml = std.subs.map(([letter, name]) => `
+      <div class="overview-sub-row">
+        <span class="overview-sub-letter">${letter}.</span>
+        <span class="overview-sub-name">${name}</span>
+      </div>
+    `).join('');
+    block.innerHTML = `
+      <div class="overview-block-head" style="background:${color};">
+        <div class="overview-block-roman">${std.roman}</div>
+        <div class="overview-block-title">Standard ${std.roman}: ${std.name}</div>
+      </div>
+      <div class="overview-subs">${subsHtml}</div>
+    `;
+    wrap.appendChild(block);
+  });
 }
 
 function renderSectionList(){
@@ -491,13 +638,18 @@ function renderSectionList(){
   SECTIONS.forEach(sec => {
     const cardsInSection = CARDS.filter(c => c.section === sec.key);
     const masteredInSection = cardsInSection.filter(c => mastered.has(c.id)).length;
+    const pct = cardsInSection.length ? Math.round((masteredInSection/cardsInSection.length)*100) : 0;
+    const color = sectionColor(sec.key);
     const chip = document.createElement('div');
     chip.className = 'section-chip' + (selectedSections.has(sec.key) ? ' selected' : '');
     chip.innerHTML = `
-      <div class="section-roman">${sec.roman}</div>
+      <div class="section-icon" style="background:${color};">${sec.roman}</div>
       <div class="section-info">
         <div class="section-name">${sec.label}</div>
-        <div class="section-count">${cardsInSection.length} cards · ${masteredInSection} mastered</div>
+        <div class="section-progress-row">
+          <div class="section-progress-track"><div class="section-progress-fill" style="width:${pct}%;"></div></div>
+          <div class="section-count">${masteredInSection}/${cardsInSection.length}</div>
+        </div>
       </div>
       <div class="section-check">${selectedSections.has(sec.key) ? '✓' : ''}</div>
     `;
@@ -529,8 +681,8 @@ function startReview(){
   if($('shuffleToggle').checked) pool = shuffle(pool);
   deck = pool;
   dIdx = 0;
-  gotItCount = 0;
-  learningCount = 0;
+  highCount = 0;
+  lowCount = 0;
   missedThisRound = [];
   hideAll();
   $('cardScreen').classList.remove('hidden');
@@ -542,15 +694,12 @@ function startReview(){
 function renderCard(){
   flipped = false;
   const item = deck[dIdx];
-  const sec = sectionByKey(item.section);
   $('cardInner').classList.remove('flipped');
-  $('cardTagFront').textContent = 'STANDARD ' + sec.roman;
-  $('cardTagBack').textContent = 'STANDARD ' + sec.roman;
   $('cardFrontText').textContent = item.front;
   $('cardBackText').textContent = item.back;
   $('progressFill').style.width = Math.round((dIdx/deck.length)*100) + '%';
-  $('learnBtn').disabled = true;
-  $('gotItBtn').disabled = true;
+  $('rateNo').disabled = true;
+  $('rateYes').disabled = true;
   $('rateHint').textContent = 'Flip the card first';
 }
 
@@ -558,27 +707,26 @@ function flipCard(){
   flipped = !flipped;
   $('cardInner').classList.toggle('flipped', flipped);
   if(flipped){
-    $('learnBtn').disabled = false;
-    $('gotItBtn').disabled = false;
-    $('rateHint').textContent = 'How well did you know it?';
+    $('rateNo').disabled = false;
+    $('rateYes').disabled = false;
+    $('rateHint').textContent = 'Did you know it?';
   } else {
     $('rateHint').textContent = 'Flip the card first';
   }
 }
 
-function rateCard(gotIt){
+function rateCard(knewIt){
   const item = deck[dIdx];
-  if(gotIt){
-    gotItCount++;
+  if(knewIt){
+    highCount++;
     mastered.add(item.id);
-    bumpMascot($('homeMascot'));
   } else {
-    learningCount++;
+    lowCount++;
     missedThisRound.push(item);
     mastered.delete(item.id);
   }
   saveMastered();
-  renderMasteredStat();
+  renderMasteryUI();
 
   if(dIdx === deck.length - 1){
     finishDeck();
@@ -595,16 +743,17 @@ function finishDeck(){
   $('progressArea').classList.add('hidden');
 
   const total = deck.length;
-  const allGood = learningCount === 0;
-  setMascot($('resultMascot'), allGood ? 'wink' : 'happy');
+  const allGood = lowCount === 0;
+  const roundPct = total ? Math.round((highCount/total)*100) : 0;
+  setRing($('resultRingFg'), $('resultRingPct'), roundPct);
 
-  $('resultTitle').textContent = 'Deck Complete!';
+  $('resultTitle').textContent = allGood ? 'Deck Complete! 🎉' : 'Deck Complete!';
   $('resultSub').textContent = allGood
-    ? "Every card, mastered. You know these Standards cold."
-    : `${learningCount} card${learningCount===1?'':'s'} still need${learningCount===1?'s':''} a bit more work — totally normal.`;
+    ? "You knew every card. This material is locked in."
+    : `${lowCount} card${lowCount===1?'':'s'} you didn't know yet — totally normal, let's circle back to those.`;
 
-  $('resGotIt').textContent = gotItCount;
-  $('resLearning').textContent = learningCount;
+  $('resGotIt').textContent = highCount;
+  $('resLearning').textContent = lowCount;
   $('resTotal').textContent = total;
 
   $('reviewMissedBtn').classList.toggle('hidden', missedThisRound.length === 0);
@@ -614,8 +763,8 @@ function reviewMissed(){
   if(missedThisRound.length === 0) return;
   deck = $('shuffleToggle').checked ? shuffle(missedThisRound) : missedThisRound.slice();
   dIdx = 0;
-  gotItCount = 0;
-  learningCount = 0;
+  highCount = 0;
+  lowCount = 0;
   missedThisRound = [];
   hideAll();
   $('cardScreen').classList.remove('hidden');
