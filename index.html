@@ -201,15 +201,34 @@ h1.title{ font-family:'Manrope', sans-serif; font-weight:800; font-size:24px; ma
 .overview-block-title{ font-weight:800; font-size:13.5px; line-height:1.3; }
 .overview-subs{ background:#fff; padding:6px 13px; }
 .overview-sub-row{
-  display:flex; align-items:baseline; gap:8px; padding:8px 0;
+  padding:10px 0;
   border-bottom:1px solid var(--line);
+  cursor:pointer;
 }
 .overview-sub-row:last-child{ border-bottom:none; }
+.overview-sub-row-head{ display:flex; align-items:flex-start; gap:8px; width:100%; position:relative; padding-right:20px; }
 .overview-sub-letter{
   font-family:'JetBrains Mono', monospace; font-weight:700; font-size:11.5px; color:var(--ink-soft);
-  flex-shrink:0; width:16px;
+  flex-shrink:0; width:16px; padding-top:1px;
 }
-.overview-sub-name{ font-family:'Manrope', sans-serif; font-weight:600; font-size:13px; color:var(--ink); line-height:1.35; }
+.overview-sub-name{ font-family:'Manrope', sans-serif; font-weight:600; font-size:13px; color:var(--ink); line-height:1.4; flex:1; }
+.overview-chevron{
+  font-family:'Manrope', sans-serif; font-size:11px; color:var(--ink-soft); flex-shrink:0;
+  transition:transform .2s ease;
+  position:absolute; right:0; top:2px;
+}
+.overview-sub-row.open .overview-chevron{ transform:rotate(180deg); }
+.overview-detail{
+  max-height:0; overflow:hidden; transition:max-height .3s ease;
+}
+.overview-sub-row.open .overview-detail{ max-height:400px; }
+.overview-detail-inner{ padding:2px 0 10px 24px; }
+.overview-detail-label{
+  font-family:'JetBrains Mono', monospace; font-size:9.5px; font-weight:700; text-transform:uppercase;
+  letter-spacing:.04em; color:var(--primary); margin-bottom:3px; margin-top:8px;
+}
+.overview-detail-label:first-child{ margin-top:0; }
+.overview-detail-text{ font-family:'Manrope', sans-serif; font-size:12.5px; font-weight:500; color:var(--ink-soft); line-height:1.5; }
 
 /* ---------- Card screen ---------- */
 .card-screen{ display:flex; flex-direction:column; flex:1; }
@@ -404,40 +423,84 @@ h1.title{ font-family:'Manrope', sans-serif; font-weight:800; font-size:24px; ma
 <script>
 const STANDARD_DETAILS = [
   { key:"std1", roman:"I", name:"Professionalism", subs:[
-    ["A","Knowledge of the Law"],
-    ["B","Independence & Objectivity"],
-    ["C","Misrepresentation"],
-    ["D","Misconduct"]
+    ["A","Knowledge of the Law",
+      "Members must understand and comply with all applicable laws and regulations, plus the Code and Standards — following whichever is stricter. If they can't stop a colleague's ongoing violation, they must dissociate from it.",
+      "A member notices her firm's marketing brochure makes a misleading performance claim. She raises it internally, and when nothing changes, she refuses to distribute the brochure."],
+    ["B","Independence & Objectivity",
+      "Members must not offer, solicit, or accept any gift, benefit, or compensation that could reasonably be expected to compromise their own or another's independence and objectivity.",
+      "An analyst is offered a paid vacation by a company he's about to issue a research report on. He declines it to keep his analysis unbiased."],
+    ["C","Misrepresentation",
+      "Members must not knowingly make false or misleading statements — or omissions — about investment analysis, recommendations, actions, or other professional activities.",
+      "A portfolio manager tells a prospect her fund 'never' has a losing quarter, despite two down quarters last year — a clear misrepresentation."],
+    ["D","Misconduct",
+      "Members must not engage in conduct involving dishonesty, fraud, or deceit, or any act that reflects adversely on their professional reputation, integrity, or competence.",
+      "A member pads his personal expense reports for extra reimbursement. Even though it's unrelated to client work, it still reflects on his integrity."]
   ]},
   { key:"std2", roman:"II", name:"Integrity of Capital Markets", subs:[
-    ["A","Material Nonpublic Information"],
-    ["B","Market Manipulation"]
+    ["A","Material Nonpublic Information",
+      "Members who possess material nonpublic information must not act or cause others to act on it.",
+      "An investor relations employee overhears an unannounced merger and tells a friend to buy shares before the news breaks — a textbook MNPI violation."],
+    ["B","Market Manipulation",
+      "Members must not engage in practices that distort prices or artificially inflate trading activity with intent to mislead market participants.",
+      "A trader places large buy orders he never intends to execute, just to create the illusion of demand before selling his own shares into the rally he caused."]
   ]},
   { key:"std3", roman:"III", name:"Duties to Clients", subs:[
-    ["A","Loyalty, Prudence and Care"],
-    ["B","Fair Dealing"],
-    ["C","Suitability"],
-    ["D","Performance Presentation"],
-    ["E","Preservation of Confidentiality"]
+    ["A","Loyalty, Prudence and Care",
+      "Members must act for the benefit of clients, placing client interests before their employer's or their own, and exercising prudence and reasonable care.",
+      "A manager avoids trading a client's account excessively just to generate more commissions for herself."],
+    ["B","Fair Dealing",
+      "Members must deal fairly and objectively with all clients when giving investment advice, disseminating research, or taking investment action.",
+      "After upgrading a stock, an analyst sends the note to every subscribed client at the same time, rather than calling his biggest account first."],
+    ["C","Suitability",
+      "Members in an advisory relationship must understand a client's risk tolerance, return objectives, and financial situation, and ensure recommendations are consistent with it.",
+      "Before recommending a leveraged ETF, an advisor checks that it fits her retired client's stated low-risk objectives — it doesn't, so she recommends something else instead."],
+    ["D","Performance Presentation",
+      "Members must avoid misrepresenting past or expected performance, and give a fair, complete picture — with full details available on request for brief presentations.",
+      "A firm's one-page pitch deck highlights only its best-performing fund, but notes that full performance history across all funds is available on request."],
+    ["E","Preservation of Confidentiality",
+      "Members must keep client information confidential unless disclosure is legally required, concerns illegal client activity, or the client permits it.",
+      "A wealth manager receives a valid subpoena for a client's account records and complies, since disclosure is legally compelled."]
   ]},
   { key:"std4", roman:"IV", name:"Duties to Employers", subs:[
-    ["A","Loyalty"],
-    ["B","Additional Compensation Arrangements"],
-    ["C","Responsibilities of Supervisors"]
+    ["A","Loyalty",
+      "Members must act for their employer's benefit and not deprive the employer of their skills or misuse confidential information — though market integrity and client loyalty can override this in whistleblowing situations.",
+      "Before quietly interviewing at a competitor, a member makes sure not to solicit her current firm's clients to come with her."],
+    ["B","Additional Compensation Arrangements",
+      "Members must not accept compensation that competes with their employer's interest unless they get written consent from all parties involved.",
+      "A broker who wants to consult for a client's side business first gets written sign-off from his firm before accepting any payment."],
+    ["C","Responsibilities of Supervisors",
+      "Supervisors must make reasonable efforts to detect and prevent violations by anyone under their supervision or authority.",
+      "A team lead implements a trade-review process for junior traders, rather than assuming everyone will follow the rules unsupervised."]
   ]},
   { key:"std5", roman:"V", name:"Investment Analysis, Recommendations, and Actions", subs:[
-    ["A","Diligence & Reasonable Basis"],
-    ["B","Communication with Clients and Prospective Clients"],
-    ["C","Record Retention"]
+    ["A","Diligence & Reasonable Basis",
+      "Members must have a reasonable, adequately researched basis for any analysis, recommendation, or action, including when relying on third-party research.",
+      "Before recommending a stock based on a colleague's model, an analyst checks the model's assumptions rather than accepting the output blindly."],
+    ["B","Communication with Clients and Prospective Clients",
+      "Members must disclose their investment process, promptly flag material changes to it, and clearly distinguish fact from opinion in their communications.",
+      "In a client memo, an advisor labels 'we believe the sector will rebound in 2026' as her opinion, distinct from the historical return data cited above it."],
+    ["C","Record Retention",
+      "Members must retain records supporting their investment analysis and client communications, typically for at least seven years absent a stricter rule.",
+      "An analyst keeps her spreadsheet models and email correspondence backing a stock call, even after the position is closed."]
   ]},
   { key:"std6", roman:"VI", name:"Conflicts of Interest", subs:[
-    ["A","Disclosure of Conflicts"],
-    ["B","Priority of Transactions"],
-    ["C","Referral Fees"]
+    ["A","Disclosure of Conflicts",
+      "Members must make full and fair, prominent, plain-language disclosure of anything that could compromise their independence or interfere with duties to clients and employers.",
+      "An analyst who sits on a company's board discloses that relationship prominently in every report she writes on that company."],
+    ["B","Priority of Transactions",
+      "Client and employer transactions must take priority over transactions where the member or candidate is the beneficial owner.",
+      "A manager waits until client orders are filled before placing the same trade in his own personal account."],
+    ["C","Referral Fees",
+      "Members must disclose any compensation, consideration, or benefit received from or paid to others for client referrals.",
+      "An advisor discloses to a client that she receives a fee for referring them to a specific estate attorney."]
   ]},
   { key:"std7", roman:"VII", name:"Responsibilities as a CFA Institute Member/Candidate", subs:[
-    ["A","Conduct as Participants in CFA Programs"],
-    ["B","Reference to CFA Institute, the CFA Designation, and the CFA Program"]
+    ["A","Conduct as Participants in CFA Programs",
+      "Members and candidates must not compromise the reputation or integrity of CFA Institute or its exam programs — including cheating, violating testing rules, or disclosing confidential exam content.",
+      "After sitting the exam, a candidate tells friends it felt heavy on Fixed Income, without revealing any specific questions or topics tested."],
+    ["B","Reference to CFA Institute, the CFA Designation, and the CFA Program",
+      "Members and candidates must not misrepresent or exaggerate what CFA Institute membership, the charter, or candidacy actually means.",
+      "A Level II candidate lists 'CFA Level I & II passed' on LinkedIn rather than implying she already holds the full charter."]
   ]}
 ];
 
@@ -615,10 +678,21 @@ function renderOverview(){
     const color = SECTION_COLORS[i % SECTION_COLORS.length];
     const block = document.createElement('div');
     block.className = 'overview-block';
-    const subsHtml = std.subs.map(([letter, name]) => `
-      <div class="overview-sub-row">
-        <span class="overview-sub-letter">${letter}.</span>
-        <span class="overview-sub-name">${name}</span>
+    const subsHtml = std.subs.map(([letter, name, definition, example], j) => `
+      <div class="overview-sub-row" id="ovRow-${std.key}-${j}" onclick="toggleOverviewRow('${std.key}-${j}')">
+        <div class="overview-sub-row-head">
+          <span class="overview-sub-letter">${letter}.</span>
+          <span class="overview-sub-name">${name}</span>
+          <span class="overview-chevron">▾</span>
+        </div>
+        <div class="overview-detail">
+          <div class="overview-detail-inner">
+            <div class="overview-detail-label">Definition</div>
+            <div class="overview-detail-text">${definition}</div>
+            <div class="overview-detail-label">Example</div>
+            <div class="overview-detail-text">${example}</div>
+          </div>
+        </div>
       </div>
     `).join('');
     block.innerHTML = `
@@ -630,6 +704,11 @@ function renderOverview(){
     `;
     wrap.appendChild(block);
   });
+}
+
+function toggleOverviewRow(id){
+  const row = $('ovRow-' + id);
+  if(row) row.classList.toggle('open');
 }
 
 function renderSectionList(){
